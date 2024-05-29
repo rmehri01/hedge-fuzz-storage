@@ -10,22 +10,30 @@ _RNvXsk_CsfxpM3XgVJph_9arbitraryReNtB5_9Arbitrary19arbitrary_take_rest:
 _RNvCsfxpM3XgVJph_9arbitrary13arbitrary_str:
   838|  1.15k|fn arbitrary_str<'a>(u: &mut Unstructured<'a>, size: usize) -> Result<&'a str> {
   839|  1.15k|    match str::from_utf8(u.peek_bytes(size).unwrap()) {
-  840|    977|        Ok(s) => {
-  841|    977|            u.bytes(size).unwrap();
-  842|    977|            Ok(s)
+  840|    965|        Ok(s) => {
+  841|    965|            u.bytes(size).unwrap();
+  842|    965|            Ok(s)
   843|       |        }
-  844|    182|        Err(e) => {
-  845|    182|            let i = e.valid_up_to();
-  846|    182|            let valid = u.bytes(i).unwrap();
-  847|    182|            let s = unsafe {
+  844|    190|        Err(e) => {
+  845|    190|            let i = e.valid_up_to();
+  846|    190|            let valid = u.bytes(i).unwrap();
+  847|    190|            let s = unsafe {
   848|      0|                debug_assert!(str::from_utf8(valid).is_ok());
-  849|    182|                str::from_utf8_unchecked(valid)
-  850|    182|            };
-  851|    182|            Ok(s)
+  849|    190|                str::from_utf8_unchecked(valid)
+  850|    190|            };
+  851|    190|            Ok(s)
   852|       |        }
   853|       |    }
   854|  1.15k|}
 
+_RNvMNtCsfxpM3XgVJph_9arbitrary12unstructuredNtB2_12Unstructured10peek_bytes:
+  579|  1.15k|    pub fn peek_bytes(&self, size: usize) -> Option<&'a [u8]> {
+  580|  1.15k|        self.data.get(..size)
+  581|  1.15k|    }
+_RNvMNtCsfxpM3XgVJph_9arbitrary12unstructuredNtB2_12Unstructured3lenB4_:
+  108|  1.15k|    pub fn len(&self) -> usize {
+  109|  1.15k|        self.data.len()
+  110|  1.15k|    }
 _RNvMNtCsfxpM3XgVJph_9arbitrary12unstructuredNtB2_12Unstructured5bytes:
   548|  1.15k|    pub fn bytes(&mut self, size: usize) -> Result<&'a [u8]> {
   549|  1.15k|        if self.data.len() < size {
@@ -40,17 +48,9 @@ _RNvMNtCsfxpM3XgVJph_9arbitrary12unstructuredNtB2_12Unstructured3new:
    85|  1.15k|    pub fn new(data: &'a [u8]) -> Self {
    86|  1.15k|        Unstructured { data }
    87|  1.15k|    }
-_RNvMNtCsfxpM3XgVJph_9arbitrary12unstructuredNtB2_12Unstructured3lenB4_:
-  108|  1.15k|    pub fn len(&self) -> usize {
-  109|  1.15k|        self.data.len()
-  110|  1.15k|    }
-_RNvMNtCsfxpM3XgVJph_9arbitrary12unstructuredNtB2_12Unstructured10peek_bytes:
-  579|  1.15k|    pub fn peek_bytes(&self, size: usize) -> Option<&'a [u8]> {
-  580|  1.15k|        self.data.get(..size)
-  581|  1.15k|    }
 
 _RNCNvXs_NtCsfTgPyq9Fuyl_9itertools8peek_nthINtB6_7PeekNthNtNtNtCs9nhK3FOW46N_4core3str4iter5CharsENtNtNtNtBZ_4iter6traits8iterator8Iterator4next0CslYuo9QnQJS9_5hedge:
-  149|  12.5k|        self.buf.pop_front().or_else(|| self.iter.next())
+  149|  12.6k|        self.buf.pop_front().or_else(|| self.iter.next())
 _RINvNtCsfTgPyq9Fuyl_9itertools8peek_nth8peek_nthNtNtNtCs9nhK3FOW46N_4core3str4iter5CharsECslYuo9QnQJS9_5hedge:
    24|  1.15k|pub fn peek_nth<I>(iterable: I) -> PeekNth<I::IntoIter>
    25|  1.15k|where
@@ -62,21 +62,21 @@ _RINvNtCsfTgPyq9Fuyl_9itertools8peek_nth8peek_nthNtNtNtCs9nhK3FOW46N_4core3str4i
    31|  1.15k|    }
    32|  1.15k|}
 _RNvMNtCsfTgPyq9Fuyl_9itertools8peek_nthINtB2_7PeekNthNtNtNtCs9nhK3FOW46N_4core3str4iter5CharsE4peekCslYuo9QnQJS9_5hedge:
-   39|   898k|    pub fn peek(&mut self) -> Option<&I::Item> {
-   40|   898k|        self.peek_nth(0)
-   41|   898k|    }
+   39|   910k|    pub fn peek(&mut self) -> Option<&I::Item> {
+   40|   910k|        self.peek_nth(0)
+   41|   910k|    }
 _RNvMNtCsfTgPyq9Fuyl_9itertools8peek_nthINtB2_7PeekNthNtNtNtCs9nhK3FOW46N_4core3str4iter5CharsE8peek_nthCslYuo9QnQJS9_5hedge:
-   71|   903k|    pub fn peek_nth(&mut self, n: usize) -> Option<&I::Item> {
-   72|   903k|        let unbuffered_items = (n + 1).saturating_sub(self.buf.len());
-   73|   903k|
-   74|   903k|        self.buf.extend(self.iter.by_ref().take(unbuffered_items));
-   75|   903k|
-   76|   903k|        self.buf.get(n)
-   77|   903k|    }
+   71|   916k|    pub fn peek_nth(&mut self, n: usize) -> Option<&I::Item> {
+   72|   916k|        let unbuffered_items = (n + 1).saturating_sub(self.buf.len());
+   73|   916k|
+   74|   916k|        self.buf.extend(self.iter.by_ref().take(unbuffered_items));
+   75|   916k|
+   76|   916k|        self.buf.get(n)
+   77|   916k|    }
 _RNvXs_NtCsfTgPyq9Fuyl_9itertools8peek_nthINtB4_7PeekNthNtNtNtCs9nhK3FOW46N_4core3str4iter5CharsENtNtNtNtBX_4iter6traits8iterator8Iterator4nextCslYuo9QnQJS9_5hedge:
-  148|   496k|    fn next(&mut self) -> Option<Self::Item> {
-  149|   496k|        self.buf.pop_front().or_else(|| self.iter.next())
-  150|   496k|    }
+  148|   505k|    fn next(&mut self) -> Option<Self::Item> {
+  149|   505k|        self.buf.pop_front().or_else(|| self.iter.next())
+  150|   505k|    }
 
 rust_fuzzer_test_input:
   259|  1.15k|            pub extern "C" fn rust_fuzzer_test_input(bytes: &[u8]) -> i32 {
@@ -201,168 +201,168 @@ _RNvMs4_NtCs4LeKDsHh25A_9once_cell4syncINtB5_8OnceCellNtNtCsjOdcKtOMjJI_5alloc6s
   969|       |            }
   970|  1.15k|        }
 
-_RNvXNtNtCslYuo9QnQJS9_5hedge3ast5nodesINtB2_8LeafNodeKVNtNtNtNtB6_6syntax5kinds8TreeKind10SourceFileUKVNtNtB4_5State11UnvalidatedUEINtB2_7AstNodeKB1C_E6syntaxB6_:
-   43|  1.15k|    fn syntax(&self) -> &SyntaxNode {
-   44|  1.15k|        &self.syntax
-   45|  1.15k|    }
 _RNvXNtNtCslYuo9QnQJS9_5hedge3ast5nodesINtB2_8LeafNodeKVNtNtNtNtB6_6syntax5kinds8TreeKind10SourceFileUKVNtNtB4_5State11UnvalidatedUEINtB2_7AstNodeKB1C_E4castB6_:
    40|  1.15k|    fn cast(node: SyntaxNode) -> Option<Self> {
    41|  1.15k|        (node.kind() == K).then_some(Self { syntax: node })
    42|  1.15k|    }
+_RNvXNtNtCslYuo9QnQJS9_5hedge3ast5nodesINtB2_8LeafNodeKVNtNtNtNtB6_6syntax5kinds8TreeKind10SourceFileUKVNtNtB4_5State11UnvalidatedUEINtB2_7AstNodeKB1C_E6syntaxB6_:
+   43|  1.15k|    fn syntax(&self) -> &SyntaxNode {
+   44|  1.15k|        &self.syntax
+   45|  1.15k|    }
 
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer14leading_trivia:
-  175|   352k|    fn leading_trivia(&mut self) {
-  176|   384k|        while let Some(char) = self.peek() {
-  177|   383k|            let Some(new_piece) = self.trivia_piece(char) else {
-  178|   351k|                break;
+  175|   357k|    fn leading_trivia(&mut self) {
+  176|   389k|        while let Some(char) = self.peek() {
+  177|   388k|            let Some(new_piece) = self.trivia_piece(char) else {
+  178|   356k|                break;
   179|       |            };
   180|  31.8k|            self.leading_trivia.push(new_piece);
   181|       |        }
-  182|   352k|    }
+  182|   357k|    }
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer15trailing_trivia:
-  184|   352k|    fn trailing_trivia(&mut self) -> Trivia {
-  185|   352k|        let mut trailing = Trivia::empty();
+  184|   357k|    fn trailing_trivia(&mut self) -> Trivia {
+  185|   357k|        let mut trailing = Trivia::empty();
   186|       |
-  187|   380k|        while let Some(char) = self.peek()
-  188|   378k|            && char != '\n'
-  189|  27.9k|        {
-  190|   370k|            let Some(new_piece) = self.trivia_piece(char) else {
-  191|   342k|                break;
+  187|   388k|        while let Some(char) = self.peek()
+  188|   386k|            && char != '\n'
+  189|  31.3k|        {
+  190|   377k|            let Some(new_piece) = self.trivia_piece(char) else {
+  191|   346k|                break;
   192|       |            };
-  193|  27.9k|            trailing.push(new_piece);
+  193|  31.3k|            trailing.push(new_piece);
   194|       |        }
   195|       |
-  196|   352k|        trailing
-  197|   352k|    }
+  196|   357k|        trailing
+  197|   357k|    }
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer7advance:
-  149|   492k|    fn advance(&mut self) -> Option<char> {
-  150|   492k|        let char = self.chars.next()?;
-  151|   491k|        self.current += char.len_utf8();
-  152|   491k|        Some(char)
-  153|   492k|    }
+  149|   501k|    fn advance(&mut self) -> Option<char> {
+  150|   501k|        let char = self.chars.next()?;
+  151|   500k|        self.current += char.len_utf8();
+  152|   500k|        Some(char)
+  153|   501k|    }
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer12trivia_piece:
-  199|   753k|    fn trivia_piece(&mut self, char: char) -> Option<TriviaPiece> {
-  200|  59.8k|        let trivia_piece = match char {
-  201|  5.20k|            '/' if self.peek_next() == Some('/') => {
-  202|  1.51k|                self.eat_while(|char| char != '\n');
-  203|  1.51k|                TriviaPiece::Comment(self.current_text().to_string())
+  199|   766k|    fn trivia_piece(&mut self, char: char) -> Option<TriviaPiece> {
+  200|  63.1k|        let trivia_piece = match char {
+  201|  5.40k|            '/' if self.peek_next() == Some('/') => {
+  202|  1.58k|                self.eat_while(|char| char != '\n');
+  203|  1.58k|                TriviaPiece::Comment(self.current_text().to_string())
   204|       |            }
   205|       |            '\n' => {
-  206|  30.0k|                self.advance();
-  207|  30.0k|                TriviaPiece::Newline(1)
+  206|  29.9k|                self.advance();
+  207|  29.9k|                TriviaPiece::Newline(1)
   208|       |            }
   209|       |            '\t' => {
-  210|  8.99k|                self.advance();
-  211|  8.99k|                TriviaPiece::Tab(1)
+  210|  9.14k|                self.advance();
+  211|  9.14k|                TriviaPiece::Tab(1)
   212|       |            }
   213|       |            ' ' => {
-  214|  19.3k|                self.advance();
-  215|  19.3k|                TriviaPiece::Space(1)
+  214|  22.4k|                self.advance();
+  215|  22.4k|                TriviaPiece::Space(1)
   216|       |            }
-  217|   694k|            _ => return None,
+  217|   702k|            _ => return None,
   218|       |        };
   219|       |
-  220|  59.8k|        self.start = self.current;
-  221|  59.8k|        Some(trivia_piece)
-  222|   753k|    }
+  220|  63.1k|        self.start = self.current;
+  221|  63.1k|        Some(trivia_piece)
+  222|   766k|    }
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer7matches:
-  155|  18.2k|    fn matches(&mut self, expected: char) -> bool {
-  156|  18.2k|        let match_found = self.peek().is_some_and(|char| char == expected);
-  157|  18.2k|        if match_found {
-  158|  4.45k|            self.chars.next();
-  159|  4.45k|            self.current += expected.len_utf8();
-  160|  13.8k|        }
+  155|  17.2k|    fn matches(&mut self, expected: char) -> bool {
+  156|  17.2k|        let match_found = self.peek().is_some_and(|char| char == expected);
+  157|  17.2k|        if match_found {
+  158|  4.02k|            self.chars.next();
+  159|  4.02k|            self.current += expected.len_utf8();
+  160|  13.2k|        }
   161|       |
-  162|  18.2k|        match_found
-  163|  18.2k|    }
+  162|  17.2k|        match_found
+  163|  17.2k|    }
 _RNvNtCslYuo9QnQJS9_5hedge5lexer8is_digit:
-  233|   182k|fn is_digit(char: char) -> bool {
-  234|   182k|    char.is_ascii_digit()
-  235|   182k|}
+  233|   186k|fn is_digit(char: char) -> bool {
+  234|   186k|    char.is_ascii_digit()
+  235|   186k|}
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer10next_token:
-   51|   352k|    fn next_token(&mut self) -> RawToken {
-   52|   352k|        self.leading_trivia();
-   53|   352k|
-   54|   352k|        self.start = self.current;
+   51|   357k|    fn next_token(&mut self) -> RawToken {
+   52|   357k|        self.leading_trivia();
+   53|   357k|
+   54|   357k|        self.start = self.current;
    55|       |
-   56|   352k|        let Some(next_char) = self.advance() else {
+   56|   357k|        let Some(next_char) = self.advance() else {
    57|  1.15k|            return self.make_token(TokenKind::Eof);
    58|       |        };
    59|       |
-   60|  12.5k|        match next_char {
+   60|  12.0k|        match next_char {
    61|   109k|            '(' => self.make_token(Token!['(']),
    62|  10.1k|            ')' => self.make_token(Token![')']),
-   63|  56.6k|            '{' => self.make_token(Token!['{']),
-   64|  1.09k|            '}' => self.make_token(Token!['}']),
-   65|  4.90k|            ',' => self.make_token(Token![,]),
-   66|    653|            ':' => self.make_token(Token![:]),
-   67|  1.22k|            ';' => self.make_token(Token![;]),
-   68|  1.44k|            '+' => self.make_token(Token![+]),
-   69|  1.93k|            '/' => self.make_token(Token![/]),
-   70|  3.06k|            '*' => self.make_token(Token![*]),
-   71|  10.6k|            '|' => self.make_token(Token![|]),
-   72|  1.57k|            '.' if self.matches('.') => self.make_token(Token![..]),
-   73|    802|            '.' => self.make_token(Token![.]),
-   74|  6.13k|            '-' if self.matches('>') => self.make_token(Token![->]),
-   75|  4.98k|            '-' => self.make_token(Token![-]),
-   76|  2.23k|            '!' if self.matches('=') => self.make_token(Token![!=]),
-   77|  1.38k|            '!' => self.make_token(Token![!]),
-   78|  3.94k|            '=' if self.matches('=') => self.make_token(Token![==]),
-   79|  2.63k|            '=' if self.matches('>') => self.make_token(Token![=>]),
-   80|  2.49k|            '=' => self.make_token(Token![=]),
-   81|  1.11k|            '>' if self.matches('=') => self.make_token(Token![>=]),
-   82|    954|            '>' => self.make_token(Token![>]),
-   83|    670|            '<' if self.matches('=') => self.make_token(Token![<=]),
-   84|    586|            '<' => self.make_token(Token![<]),
-   85|    382|            '"' => self.string(),
-   86|   134k|            char if is_digit(char) => self.number(),
-   87|   130k|            char if is_alpha(char) => self.ident(),
-   88|  92.1k|            _ => self.make_token(TokenKind::Unknown),
+   63|  57.5k|            '{' => self.make_token(Token!['{']),
+   64|  1.32k|            '}' => self.make_token(Token!['}']),
+   65|  4.77k|            ',' => self.make_token(Token![,]),
+   66|    666|            ':' => self.make_token(Token![:]),
+   67|  1.27k|            ';' => self.make_token(Token![;]),
+   68|  1.69k|            '+' => self.make_token(Token![+]),
+   69|  2.00k|            '/' => self.make_token(Token![/]),
+   70|  3.28k|            '*' => self.make_token(Token![*]),
+   71|  10.7k|            '|' => self.make_token(Token![|]),
+   72|  1.41k|            '.' if self.matches('.') => self.make_token(Token![..]),
+   73|    772|            '.' => self.make_token(Token![.]),
+   74|  6.18k|            '-' if self.matches('>') => self.make_token(Token![->]),
+   75|  5.03k|            '-' => self.make_token(Token![-]),
+   76|  1.93k|            '!' if self.matches('=') => self.make_token(Token![!=]),
+   77|  1.24k|            '!' => self.make_token(Token![!]),
+   78|  3.73k|            '=' if self.matches('=') => self.make_token(Token![==]),
+   79|  2.49k|            '=' if self.matches('>') => self.make_token(Token![=>]),
+   80|  2.38k|            '=' => self.make_token(Token![=]),
+   81|    896|            '>' if self.matches('=') => self.make_token(Token![>=]),
+   82|    780|            '>' => self.make_token(Token![>]),
+   83|    637|            '<' if self.matches('=') => self.make_token(Token![<=]),
+   84|    553|            '<' => self.make_token(Token![<]),
+   85|    387|            '"' => self.string(),
+   86|   138k|            char if is_digit(char) => self.number(),
+   87|   134k|            char if is_alpha(char) => self.ident(),
+   88|  95.1k|            _ => self.make_token(TokenKind::Unknown),
    89|       |        }
-   90|   352k|    }
+   90|   357k|    }
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer9eat_while:
-  224|  44.2k|    fn eat_while(&mut self, predicate: fn(char) -> bool) {
-  225|   113k|        while let Some(char) = self.peek()
-  226|   113k|            && predicate(char)
-  227|  69.7k|        {
-  228|  69.7k|            self.advance();
-  229|  69.7k|        }
-  230|  44.2k|    }
+  224|  44.7k|    fn eat_while(&mut self, predicate: fn(char) -> bool) {
+  225|   115k|        while let Some(char) = self.peek()
+  226|   115k|            && predicate(char)
+  227|  70.8k|        {
+  228|  70.8k|            self.advance();
+  229|  70.8k|        }
+  230|  44.7k|    }
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer6string:
-   92|    382|    fn string(&mut self) -> RawToken {
-   93|  11.3k|        while let Some(char) = self.advance() {
-   94|  11.3k|            if char == '"' {
-   95|    333|                return self.make_token(TokenKind::String);
-   96|  10.9k|            }
+   92|    387|    fn string(&mut self) -> RawToken {
+   93|  11.5k|        while let Some(char) = self.advance() {
+   94|  11.4k|            if char == '"' {
+   95|    337|                return self.make_token(TokenKind::String);
+   96|  11.1k|            }
    97|       |        }
    98|       |
-   99|     49|        let span = Span {
-  100|     49|            start: self.start,
-  101|     49|            end: self.current - 1,
-  102|     49|        };
-  103|     49|        self.errors.push(SyntaxError::UnterminatedString { span });
-  104|     49|        self.make_token(TokenKind::String)
-  105|    382|    }
+   99|     50|        let span = Span {
+  100|     50|            start: self.start,
+  101|     50|            end: self.current - 1,
+  102|     50|        };
+  103|     50|        self.errors.push(SyntaxError::UnterminatedString { span });
+  104|     50|        self.make_token(TokenKind::String)
+  105|    387|    }
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer4peek:
-  141|   898k|    fn peek(&mut self) -> Option<char> {
-  142|   898k|        self.chars.peek().copied()
-  143|   898k|    }
+  141|   910k|    fn peek(&mut self) -> Option<char> {
+  142|   910k|        self.chars.peek().copied()
+  143|   910k|    }
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer6number:
-  107|  4.08k|    fn number(&mut self) -> RawToken {
-  108|  4.08k|        self.eat_while(is_digit);
-  109|  4.08k|        self.make_token(TokenKind::Int)
-  110|  4.08k|    }
+  107|  3.66k|    fn number(&mut self) -> RawToken {
+  108|  3.66k|        self.eat_while(is_digit);
+  109|  3.66k|        self.make_token(TokenKind::Int)
+  110|  3.66k|    }
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer9peek_next:
-  145|  5.20k|    fn peek_next(&mut self) -> Option<char> {
-  146|  5.20k|        self.chars.peek_nth(1).copied()
-  147|  5.20k|    }
+  145|  5.40k|    fn peek_next(&mut self) -> Option<char> {
+  146|  5.40k|        self.chars.peek_nth(1).copied()
+  147|  5.40k|    }
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer5ident:
-  112|  38.6k|    fn ident(&mut self) -> RawToken {
-  113|  38.6k|        self.eat_while(|char| is_alpha(char) || is_digit(char));
-  114|  38.6k|
-  115|  38.6k|        let kind = self.ident_kind();
-  116|  38.6k|        self.make_token(kind)
-  117|  38.6k|    }
+  112|  39.5k|    fn ident(&mut self) -> RawToken {
+  113|  39.5k|        self.eat_while(|char| is_alpha(char) || is_digit(char));
+  114|  39.5k|
+  115|  39.5k|        let kind = self.ident_kind();
+  116|  39.5k|        self.make_token(kind)
+  117|  39.5k|    }
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer3new:
    22|  1.15k|    pub fn new(input: &'input str) -> Self {
    23|  1.15k|        Self {
@@ -375,90 +375,90 @@ _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer3new:
    30|  1.15k|        }
    31|  1.15k|    }
 _RNvNtCslYuo9QnQJS9_5hedge5lexer8is_alpha:
-  237|   229k|fn is_alpha(char: char) -> bool {
-  238|   229k|    char.is_alphabetic() || char == '_'
-  239|   229k|}
+  237|   235k|fn is_alpha(char: char) -> bool {
+  238|   235k|    char.is_alphabetic() || char == '_'
+  239|   235k|}
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer10all_tokens:
    34|  1.15k|    pub fn all_tokens(mut self) -> (Vec<RawToken>, Vec<SyntaxError>) {
    35|  1.15k|        let mut tokens = Vec::new();
    36|       |
-   37|   352k|        loop {
-   38|   352k|            let token = self.next_token();
-   39|   352k|            let token_kind = token.kind();
-   40|   352k|            tokens.push(token);
-   41|   352k|
-   42|   352k|            if token_kind == TokenKind::Eof {
+   37|   357k|        loop {
+   38|   357k|            let token = self.next_token();
+   39|   357k|            let token_kind = token.kind();
+   40|   357k|            tokens.push(token);
+   41|   357k|
+   42|   357k|            if token_kind == TokenKind::Eof {
    43|  1.15k|                break;
-   44|   351k|            }
+   44|   356k|            }
    45|       |        }
    46|       |
    47|  1.15k|        (tokens, self.errors)
    48|  1.15k|    }
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer10ident_kind:
-  119|  38.6k|    fn ident_kind(&self) -> TokenKind {
-  120|  38.6k|        let ident = self.current_text();
-  121|  38.6k|        match ident {
-  122|  38.6k|            "fn" => Token![fn],
-  123|  35.4k|            "let" => Token![let],
-  124|  35.2k|            "return" => Token![return],
-  125|  34.1k|            "true" => Token![true],
-  126|  33.9k|            "false" => Token![false],
-  127|  33.1k|            "if" => Token![if],
-  128|  30.8k|            "else" => Token![else],
-  129|  30.3k|            "match" => Token![match],
-  130|  30.1k|            "for" => Token![for],
-  131|  25.4k|            "in" => Token![in],
-  132|  25.3k|            "while" => Token![while],
-  133|  25.3k|            _ => TokenKind::Ident,
+  119|  39.5k|    fn ident_kind(&self) -> TokenKind {
+  120|  39.5k|        let ident = self.current_text();
+  121|  39.5k|        match ident {
+  122|  39.5k|            "fn" => Token![fn],
+  123|  36.2k|            "let" => Token![let],
+  124|  36.1k|            "return" => Token![return],
+  125|  34.8k|            "true" => Token![true],
+  126|  34.6k|            "false" => Token![false],
+  127|  33.7k|            "if" => Token![if],
+  128|  31.2k|            "else" => Token![else],
+  129|  30.8k|            "match" => Token![match],
+  130|  30.6k|            "for" => Token![for],
+  131|  25.8k|            "in" => Token![in],
+  132|  25.7k|            "while" => Token![while],
+  133|  25.7k|            _ => TokenKind::Ident,
   134|       |        }
-  135|  38.6k|    }
+  135|  39.5k|    }
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer12current_text:
-  137|   393k|    fn current_text(&self) -> &str {
-  138|   393k|        &self.input[self.start..self.current]
-  139|   393k|    }
+  137|   398k|    fn current_text(&self) -> &str {
+  138|   398k|        &self.input[self.start..self.current]
+  139|   398k|    }
 _RNvMNtCslYuo9QnQJS9_5hedge5lexerNtB2_5Lexer10make_token:
-  165|   352k|    fn make_token(&mut self, kind: TokenKind) -> RawToken {
-  166|   352k|        let leading_trivia = mem::take(&mut self.leading_trivia);
-  167|   352k|
-  168|   352k|        let text = self.current_text().to_string();
-  169|   352k|        self.start = self.current;
-  170|   352k|
-  171|   352k|        let trailing_trivia = self.trailing_trivia();
-  172|   352k|        RawToken::new(leading_trivia, kind, text, trailing_trivia)
-  173|   352k|    }
+  165|   357k|    fn make_token(&mut self, kind: TokenKind) -> RawToken {
+  166|   357k|        let leading_trivia = mem::take(&mut self.leading_trivia);
+  167|   357k|
+  168|   357k|        let text = self.current_text().to_string();
+  169|   357k|        self.start = self.current;
+  170|   357k|
+  171|   357k|        let trailing_trivia = self.trailing_trivia();
+  172|   357k|        RawToken::new(leading_trivia, kind, text, trailing_trivia)
+  173|   357k|    }
 _RNCNvMNtCslYuo9QnQJS9_5hedge5lexerNtB4_5Lexer12trivia_piece0B6_:
-  202|  7.80k|                self.eat_while(|char| char != '\n');
+  202|  8.16k|                self.eat_while(|char| char != '\n');
 _RNCNvMNtCslYuo9QnQJS9_5hedge5lexerNtB4_5Lexer7matches0B6_:
-  156|  18.2k|        let match_found = self.peek().is_some_and(|char| char == expected);
+  156|  17.2k|        let match_found = self.peek().is_some_and(|char| char == expected);
 _RNCNvMNtCslYuo9QnQJS9_5hedge5lexerNtB4_5Lexer5ident0B6_:
-  113|  98.4k|        self.eat_while(|char| is_alpha(char) || is_digit(char));
+  113|   100k|        self.eat_while(|char| is_alpha(char) || is_digit(char));
 
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser4open:
-  491|   505k|    fn open(&mut self) -> MarkOpened {
-  492|   505k|        let mark = MarkOpened::new(self.events.len());
-  493|   505k|        self.events.push(Event::Open {
-  494|   505k|            kind: TreeKind::Unknown,
-  495|   505k|        });
-  496|   505k|        mark
-  497|   505k|    }
+  491|   511k|    fn open(&mut self) -> MarkOpened {
+  492|   511k|        let mark = MarkOpened::new(self.events.len());
+  493|   511k|        self.events.push(Event::Open {
+  494|   511k|            kind: TreeKind::Unknown,
+  495|   511k|        });
+  496|   511k|        mark
+  497|   511k|    }
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser6expect:
-  571|   387k|    fn expect(&mut self, kind: TokenKind) {
-  572|   387k|        if self.eat(kind) {
-  573|   174k|            return;
-  574|   212k|        }
-  575|   212k|
-  576|   212k|        let current = &self.tokens[self.pos];
-  577|   212k|        self.error(SyntaxError::UnexpectedToken {
-  578|   212k|            expected: kind,
-  579|   212k|            found: (
-  580|   212k|                current.kind(),
-  581|   212k|                Span {
-  582|   212k|                    start: self.offset,
-  583|   212k|                    end: self.offset + current.text_len(),
-  584|   212k|                },
-  585|   212k|            ),
-  586|   212k|        });
-  587|   387k|    }
+  571|   390k|    fn expect(&mut self, kind: TokenKind) {
+  572|   390k|        if self.eat(kind) {
+  573|   176k|            return;
+  574|   214k|        }
+  575|   214k|
+  576|   214k|        let current = &self.tokens[self.pos];
+  577|   214k|        self.error(SyntaxError::UnexpectedToken {
+  578|   214k|            expected: kind,
+  579|   214k|            found: (
+  580|   214k|                current.kind(),
+  581|   214k|                Span {
+  582|   214k|                    start: self.offset,
+  583|   214k|                    end: self.offset + current.text_len(),
+  584|   214k|                },
+  585|   214k|            ),
+  586|   214k|        });
+  587|   390k|    }
 _RNvNtCslYuo9QnQJS9_5hedge6parser17parse_source_file:
    13|  1.15k|pub fn parse_source_file(input: &str) -> (ast::SourceFileU, Vec<SyntaxError>) {
    14|  1.15k|    let (tokens, mut errors) = Lexer::new(input).all_tokens();
@@ -472,79 +472,79 @@ _RNvNtCslYuo9QnQJS9_5hedge6parser17parse_source_file:
    22|  1.15k|    )
    23|  1.15k|}
 _RNvNvNtCslYuo9QnQJS9_5hedge6parser19right_binds_tighter9tightness:
-  300|   169k|    fn tightness(kind: TokenKind) -> Option<usize> {
-  301|   169k|        [
-  302|   169k|            // Precedence table:
-  303|   169k|            Token![=],
-  304|   169k|            Token![+],
-  305|   169k|            Token![-],
-  306|   169k|            Token![*],
-  307|   169k|            Token![/],
-  308|   169k|        ]
-  309|   169k|        .iter()
-  310|   169k|        .position(|level| level == &kind)
-  311|   169k|    }
+  300|   171k|    fn tightness(kind: TokenKind) -> Option<usize> {
+  301|   171k|        [
+  302|   171k|            // Precedence table:
+  303|   171k|            Token![=],
+  304|   171k|            Token![+],
+  305|   171k|            Token![-],
+  306|   171k|            Token![*],
+  307|   171k|            Token![/],
+  308|   171k|        ]
+  309|   171k|        .iter()
+  310|   171k|        .position(|level| level == &kind)
+  311|   171k|    }
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser11open_before:
-  505|  47.2k|    fn open_before(&mut self, closed: MarkClosed) -> MarkOpened {
-  506|  47.2k|        let opened = MarkOpened::new(closed.index);
-  507|  47.2k|        self.events.insert(
-  508|  47.2k|            closed.index,
-  509|  47.2k|            Event::Open {
-  510|  47.2k|                kind: TreeKind::Unknown,
-  511|  47.2k|            },
-  512|  47.2k|        );
-  513|  47.2k|        opened
-  514|  47.2k|    }
+  505|  46.8k|    fn open_before(&mut self, closed: MarkClosed) -> MarkOpened {
+  506|  46.8k|        let opened = MarkOpened::new(closed.index);
+  507|  46.8k|        self.events.insert(
+  508|  46.8k|            closed.index,
+  509|  46.8k|            Event::Open {
+  510|  46.8k|                kind: TreeKind::Unknown,
+  511|  46.8k|            },
+  512|  46.8k|        );
+  513|  46.8k|        opened
+  514|  46.8k|    }
 _RNvMNtCslYuo9QnQJS9_5hedge6parserNtB2_11ParamFlavor7l_delim:
-   95|  7.59k|    fn l_delim(self) -> TokenKind {
-   96|  7.59k|        match self {
-   97|  2.08k|            Self::Function => Token!['('],
-   98|  5.50k|            Self::Lambda => Token![|],
+   95|  7.63k|    fn l_delim(self) -> TokenKind {
+   96|  7.63k|        match self {
+   97|  2.10k|            Self::Function => Token!['('],
+   98|  5.53k|            Self::Lambda => Token![|],
    99|       |        }
-  100|  7.59k|    }
+  100|  7.63k|    }
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser5is_at:
-  550|  1.64M|    fn is_at(&self, kind: TokenKind) -> bool {
-  551|  1.64M|        self.nth(0) == kind
-  552|  1.64M|    }
+  550|  1.66M|    fn is_at(&self, kind: TokenKind) -> bool {
+  551|  1.66M|        self.nth(0) == kind
+  552|  1.66M|    }
 _RNvMs0_NtCslYuo9QnQJS9_5hedge6parserNtB5_10MarkOpened3new:
-  664|   553k|    fn new(index: usize) -> Self {
-  665|   553k|        Self { index }
-  666|   553k|    }
+  664|   558k|    fn new(index: usize) -> Self {
+  665|   558k|        Self { index }
+  666|   558k|    }
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser12close_before:
-  516|  41.7k|    fn close_before(
-  517|  41.7k|        &mut self,
-  518|  41.7k|        before: MarkOpened,
-  519|  41.7k|        kind: TreeKind,
-  520|  41.7k|        after: MarkClosed,
-  521|  41.7k|    ) -> MarkClosed {
-  522|  41.7k|        self.events[before.index] = Event::Open { kind };
-  523|  41.7k|        self.events.insert(after.index, Event::Close);
-  524|  41.7k|        MarkClosed::new(before.index)
-  525|  41.7k|    }
+  516|  42.8k|    fn close_before(
+  517|  42.8k|        &mut self,
+  518|  42.8k|        before: MarkOpened,
+  519|  42.8k|        kind: TreeKind,
+  520|  42.8k|        after: MarkClosed,
+  521|  42.8k|    ) -> MarkClosed {
+  522|  42.8k|        self.events[before.index] = Event::Open { kind };
+  523|  42.8k|        self.events.insert(after.index, Event::Close);
+  524|  42.8k|        MarkClosed::new(before.index)
+  525|  42.8k|    }
 _RNvNtCslYuo9QnQJS9_5hedge6parser11lambda_expr:
-  421|  5.50k|fn lambda_expr(p: &mut Parser) -> MarkClosed {
-  422|  5.50k|    assert!(p.is_at(Token![|]));
+  421|  5.53k|fn lambda_expr(p: &mut Parser) -> MarkClosed {
+  422|  5.53k|    assert!(p.is_at(Token![|]));
   423|       |
-  424|  5.50k|    p.scope(TreeKind::LambdaExpr, |p| {
+  424|  5.53k|    p.scope(TreeKind::LambdaExpr, |p| {
   425|       |        params(p, ParamFlavor::Lambda);
   426|       |        if p.is_at(Token![->]) {
   427|       |            ret_type_expr(p);
   428|       |        }
   429|       |
   430|       |        expr(p);
-  431|  5.50k|    })
-  432|  5.50k|}
+  431|  5.53k|    })
+  432|  5.53k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser4expr:
-  262|   173k|fn expr(p: &mut Parser) -> Option<MarkClosed> {
-  263|   173k|    // TODO: revisit this and table, seems odd to pass eof
-  264|   173k|    // We don't have a token to the left yet, so the right should always bind tighter
-  265|   173k|    rec_expr(p, TokenKind::Eof)
-  266|   173k|}
+  262|   175k|fn expr(p: &mut Parser) -> Option<MarkClosed> {
+  263|   175k|    // TODO: revisit this and table, seems odd to pass eof
+  264|   175k|    // We don't have a token to the left yet, so the right should always bind tighter
+  265|   175k|    rec_expr(p, TokenKind::Eof)
+  266|   175k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser5param:
-  138|  3.05k|fn param(p: &mut Parser, flavor: ParamFlavor) {
-  139|  3.05k|    assert!(p.is_at(TokenKind::Ident));
+  138|  3.32k|fn param(p: &mut Parser, flavor: ParamFlavor) {
+  139|  3.32k|    assert!(p.is_at(TokenKind::Ident));
   140|       |
-  141|  3.05k|    p.scope(TreeKind::Param, |p| {
+  141|  3.32k|    p.scope(TreeKind::Param, |p| {
   142|       |        p.expect(TokenKind::Ident);
   143|       |
   144|       |        match flavor {
@@ -564,13 +564,13 @@ _RNvNtCslYuo9QnQJS9_5hedge6parser5param:
   158|       |        if !p.is_at(flavor.r_delim()) {
   159|       |            p.expect(Token![,]);
   160|       |        }
-  161|  3.05k|    });
-  162|  3.05k|}
+  161|  3.32k|    });
+  162|  3.32k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser7if_expr:
-  370|  2.24k|fn if_expr(p: &mut Parser) -> MarkClosed {
-  371|  2.24k|    assert!(p.is_at(Token![if]));
+  370|  2.40k|fn if_expr(p: &mut Parser) -> MarkClosed {
+  371|  2.40k|    assert!(p.is_at(Token![if]));
   372|       |
-  373|  2.24k|    p.scope(TreeKind::IfExpr, |p| {
+  373|  2.40k|    p.scope(TreeKind::IfExpr, |p| {
   374|       |        p.expect(Token![if]);
   375|       |
   376|       |        let condition_mark = expr(p);
@@ -595,31 +595,31 @@ _RNvNtCslYuo9QnQJS9_5hedge6parser7if_expr:
   395|       |                _ => p.advance_with_error("expected a block or another if expression"),
   396|       |            }
   397|       |        }
-  398|  2.24k|    })
-  399|  2.24k|}
+  398|  2.40k|    })
+  399|  2.40k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser4args:
-  434|  16.7k|fn args(p: &mut Parser) {
-  435|  16.7k|    assert!(p.is_at(Token!['(']));
+  434|  16.4k|fn args(p: &mut Parser) {
+  435|  16.4k|    assert!(p.is_at(Token!['(']));
   436|       |
-  437|  16.7k|    p.scope(TreeKind::Args, |p| {
+  437|  16.4k|    p.scope(TreeKind::Args, |p| {
   438|       |        p.expect(Token!['(']);
   439|       |        arg_list(p);
   440|       |        p.expect(Token![')']);
-  441|  16.7k|    });
-  442|  16.7k|}
+  441|  16.4k|    });
+  442|  16.4k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser12literal_expr:
-  344|  3.82k|fn literal_expr(p: &mut Parser) -> MarkClosed {
-  345|  3.82k|    assert!(p.is_at_any(&[TokenKind::Int, Token![true], Token![false]]));
+  344|  3.49k|fn literal_expr(p: &mut Parser) -> MarkClosed {
+  345|  3.49k|    assert!(p.is_at_any(&[TokenKind::Int, Token![true], Token![false]]));
   346|       |
-  347|  3.82k|    p.scope(TreeKind::LiteralExpr, |p| {
+  347|  3.49k|    p.scope(TreeKind::LiteralExpr, |p| {
   348|       |        p.advance();
-  349|  3.82k|    })
-  350|  3.82k|}
+  349|  3.49k|    })
+  350|  3.49k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser8function:
-   68|  2.63k|fn function(p: &mut Parser) {
-   69|  2.63k|    assert!(p.is_at(Token![fn]));
+   68|  2.67k|fn function(p: &mut Parser) {
+   69|  2.67k|    assert!(p.is_at(Token![fn]));
    70|       |
-   71|  2.63k|    p.scope(TreeKind::Function, |p| {
+   71|  2.67k|    p.scope(TreeKind::Function, |p| {
    72|       |        p.expect(Token![fn]);
    73|       |        p.expect(TokenKind::Ident);
    74|       |        if p.is_at(Token!['(']) {
@@ -633,13 +633,13 @@ _RNvNtCslYuo9QnQJS9_5hedge6parser8function:
    82|       |        if p.is_at(Token!['{']) {
    83|       |            block_expr(p);
    84|       |        }
-   85|  2.63k|    });
-   86|  2.63k|}
+   85|  2.67k|    });
+   86|  2.67k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser8for_expr:
-  401|  4.42k|fn for_expr(p: &mut Parser) -> MarkClosed {
-  402|  4.42k|    assert!(p.is_at(Token![for]));
+  401|  4.53k|fn for_expr(p: &mut Parser) -> MarkClosed {
+  402|  4.53k|    assert!(p.is_at(Token![for]));
   403|       |
-  404|  4.42k|    p.scope(TreeKind::ForExpr, |p| {
+  404|  4.53k|    p.scope(TreeKind::ForExpr, |p| {
   405|       |        p.expect(Token![for]);
   406|       |        p.expect(TokenKind::Ident);
   407|       |        p.expect(Token![in]);
@@ -653,11 +653,11 @@ _RNvNtCslYuo9QnQJS9_5hedge6parser8for_expr:
   415|       |        if p.is_at(Token!['{']) {
   416|       |            block_expr(p);
   417|       |        }
-  418|  4.42k|    })
-  419|  4.42k|}
+  418|  4.53k|    })
+  419|  4.53k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser8arg_list:
-  444|  16.7k|fn arg_list(p: &mut Parser) {
-  445|  16.7k|    p.scope(TreeKind::ArgList, |p| {
+  444|  16.4k|fn arg_list(p: &mut Parser) {
+  445|  16.4k|    p.scope(TreeKind::ArgList, |p| {
   446|       |        while !p.is_at(Token![')']) && !p.is_at_eof() {
   447|       |            if p.is_at_any(EXPR_FIRST) {
   448|       |                arg(p);
@@ -665,19 +665,19 @@ _RNvNtCslYuo9QnQJS9_5hedge6parser8arg_list:
   450|       |                break;
   451|       |            }
   452|       |        }
-  453|  16.7k|    });
-  454|  16.7k|}
+  453|  16.4k|    });
+  454|  16.4k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser6params:
-  112|  7.59k|fn params(p: &mut Parser, flavor: ParamFlavor) {
-  113|  7.59k|    let (l_delim, r_delim) = (flavor.l_delim(), flavor.r_delim());
-  114|  7.59k|    assert!(p.is_at(l_delim));
+  112|  7.63k|fn params(p: &mut Parser, flavor: ParamFlavor) {
+  113|  7.63k|    let (l_delim, r_delim) = (flavor.l_delim(), flavor.r_delim());
+  114|  7.63k|    assert!(p.is_at(l_delim));
   115|       |
-  116|  7.59k|    p.scope(TreeKind::Params, |p| {
+  116|  7.63k|    p.scope(TreeKind::Params, |p| {
   117|       |        p.expect(l_delim);
   118|       |        param_list(p, r_delim, flavor);
   119|       |        p.expect(r_delim);
-  120|  7.59k|    });
-  121|  7.59k|}
+  120|  7.63k|    });
+  121|  7.63k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser13ret_type_expr:
   164|    111|fn ret_type_expr(p: &mut Parser) {
   165|    111|    assert!(p.is_at(Token![->]));
@@ -695,32 +695,32 @@ _RNvNtCslYuo9QnQJS9_5hedge6parser11source_file:
    53|  1.15k|    });
    54|  1.15k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser10block_expr:
-  192|  54.6k|fn block_expr(p: &mut Parser) -> MarkClosed {
-  193|  54.6k|    assert!(p.is_at(Token!['{']));
+  192|  55.5k|fn block_expr(p: &mut Parser) -> MarkClosed {
+  193|  55.5k|    assert!(p.is_at(Token!['{']));
   194|       |
-  195|  54.6k|    p.scope(TreeKind::BlockExpr, |p| {
+  195|  55.5k|    p.scope(TreeKind::BlockExpr, |p| {
   196|       |        p.expect(Token!['{']);
   197|       |        block(p);
   198|       |        p.expect(Token!['}']);
-  199|  54.6k|    })
-  200|  54.6k|}
+  199|  55.5k|    })
+  200|  55.5k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser8let_stmt:
-  236|     87|fn let_stmt(p: &mut Parser) {
-  237|     87|    assert!(p.is_at(Token![let]));
+  236|     95|fn let_stmt(p: &mut Parser) {
+  237|     95|    assert!(p.is_at(Token![let]));
   238|       |
-  239|     87|    p.scope(TreeKind::LetStmt, |p| {
+  239|     95|    p.scope(TreeKind::LetStmt, |p| {
   240|       |        p.expect(Token![let]);
   241|       |        p.expect(TokenKind::Ident);
   242|       |        p.expect(Token![=]);
   243|       |        expr(p);
   244|       |        p.expect(Token![;]);
-  245|     87|    });
-  246|     87|}
+  245|     95|    });
+  246|     95|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser11return_stmt:
-  248|  1.08k|fn return_stmt(p: &mut Parser) {
-  249|  1.08k|    assert!(p.is_at(Token![return]));
+  248|  1.22k|fn return_stmt(p: &mut Parser) {
+  249|  1.22k|    assert!(p.is_at(Token![return]));
   250|       |
-  251|  1.08k|    p.scope(TreeKind::ReturnStmt, |p| {
+  251|  1.22k|    p.scope(TreeKind::ReturnStmt, |p| {
   252|       |        p.expect(Token![return]);
   253|       |        if p.is_at_any(EXPR_FIRST) {
   254|       |            expr(p);
@@ -728,10 +728,10 @@ _RNvNtCslYuo9QnQJS9_5hedge6parser11return_stmt:
   256|       |            p.empty();
   257|       |        }
   258|       |        p.expect(Token![;]);
-  259|  1.08k|    });
-  260|  1.08k|}
+  259|  1.22k|    });
+  260|  1.22k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser19right_binds_tighter:
-  299|   163k|fn right_binds_tighter(left: TokenKind, right: TokenKind) -> bool {
+  299|   165k|fn right_binds_tighter(left: TokenKind, right: TokenKind) -> bool {
   300|       |    fn tightness(kind: TokenKind) -> Option<usize> {
   301|       |        [
   302|       |            // Precedence table:
@@ -745,158 +745,158 @@ _RNvNtCslYuo9QnQJS9_5hedge6parser19right_binds_tighter:
   310|       |        .position(|level| level == &kind)
   311|       |    }
   312|       |
-  313|   163k|    let Some(right_tightness) = tightness(right) else {
-  314|   158k|        return false;
+  313|   165k|    let Some(right_tightness) = tightness(right) else {
+  314|   159k|        return false;
   315|       |    };
-  316|  5.67k|    let Some(left_tightness) = tightness(left) else {
+  316|  5.90k|    let Some(left_tightness) = tightness(left) else {
   317|       |        // We should only not have a left precedence when we start parsing an expression
-  318|  4.04k|        assert!(left == TokenKind::Eof);
-  319|  4.04k|        return true;
+  318|  4.14k|        assert!(left == TokenKind::Eof);
+  319|  4.14k|        return true;
   320|       |    };
   321|       |
-  322|  1.63k|    right_tightness > left_tightness
-  323|   163k|}
+  322|  1.75k|    right_tightness > left_tightness
+  323|   165k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser14delimited_expr:
-  326|   159k|fn delimited_expr(p: &mut Parser) -> Option<MarkClosed> {
-  327|   159k|    let mark_closed = match p.nth(0) {
-  328|  3.82k|        TokenKind::Int | Token![true] | Token![false] => literal_expr(p),
-  329|  18.0k|        TokenKind::Ident => ident_expr(p),
-  330|  52.5k|        Token!['{'] => block_expr(p),
-  331|  72.4k|        Token!['('] => paren_expr(p),
-  332|  2.24k|        Token![if] => if_expr(p),
-  333|  4.42k|        Token![for] => for_expr(p),
-  334|  5.50k|        Token![|] => lambda_expr(p),
+  326|   160k|fn delimited_expr(p: &mut Parser) -> Option<MarkClosed> {
+  327|   160k|    let mark_closed = match p.nth(0) {
+  328|  3.49k|        TokenKind::Int | Token![true] | Token![false] => literal_expr(p),
+  329|  17.8k|        TokenKind::Ident => ident_expr(p),
+  330|  53.4k|        Token!['{'] => block_expr(p),
+  331|  73.1k|        Token!['('] => paren_expr(p),
+  332|  2.40k|        Token![if] => if_expr(p),
+  333|  4.53k|        Token![for] => for_expr(p),
+  334|  5.53k|        Token![|] => lambda_expr(p),
   335|       |        _ => {
   336|      0|            assert!(!p.is_at_any(EXPR_FIRST));
   337|      0|            return None;
   338|       |        }
   339|       |    };
   340|       |
-  341|   159k|    Some(mark_closed)
-  342|   159k|}
+  341|   160k|    Some(mark_closed)
+  342|   160k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser10ident_expr:
-  352|  18.0k|fn ident_expr(p: &mut Parser) -> MarkClosed {
-  353|  18.0k|    assert!(p.is_at(TokenKind::Ident));
+  352|  17.8k|fn ident_expr(p: &mut Parser) -> MarkClosed {
+  353|  17.8k|    assert!(p.is_at(TokenKind::Ident));
   354|       |
-  355|  18.0k|    p.scope(TreeKind::IdentExpr, |p| {
+  355|  17.8k|    p.scope(TreeKind::IdentExpr, |p| {
   356|       |        p.advance();
-  357|  18.0k|    })
-  358|  18.0k|}
+  357|  17.8k|    })
+  358|  17.8k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser3arg:
-  456|  16.1k|fn arg(p: &mut Parser) {
-  457|  16.1k|    p.scope(TreeKind::Arg, |p| {
+  456|  15.6k|fn arg(p: &mut Parser) {
+  457|  15.6k|    p.scope(TreeKind::Arg, |p| {
   458|       |        expr(p);
   459|       |        if !p.is_at(Token![')']) {
   460|       |            p.expect(Token![,]);
   461|       |        }
-  462|  16.1k|    });
-  463|  16.1k|}
+  462|  15.6k|    });
+  463|  15.6k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser8rec_expr:
-  269|   178k|fn rec_expr(p: &mut Parser, left: TokenKind) -> Option<MarkClosed> {
-  270|   178k|    if !p.is_at_any(EXPR_FIRST) {
+  269|   180k|fn rec_expr(p: &mut Parser, left: TokenKind) -> Option<MarkClosed> {
+  270|   180k|    if !p.is_at_any(EXPR_FIRST) {
   271|       |        // TODO: p.err_recovery?
-  272|  19.2k|        p.advance_with_error("expected expression");
-  273|  19.2k|        return None;
-  274|   159k|    }
+  272|  19.7k|        p.advance_with_error("expected expression");
+  273|  19.7k|        return None;
+  274|   160k|    }
   275|       |
-  276|   159k|    let mut lhs = delimited_expr(p)?;
+  276|   160k|    let mut lhs = delimited_expr(p)?;
   277|       |
-  278|   175k|    while p.is_at(Token!['(']) {
-  279|  16.7k|        let mark = p.open_before(lhs);
-  280|  16.7k|        args(p);
-  281|  16.7k|        lhs = p.close(mark, TreeKind::CallExpr);
-  282|  16.7k|    }
+  278|   176k|    while p.is_at(Token!['(']) {
+  279|  16.4k|        let mark = p.open_before(lhs);
+  280|  16.4k|        args(p);
+  281|  16.4k|        lhs = p.close(mark, TreeKind::CallExpr);
+  282|  16.4k|    }
   283|       |
-  284|   163k|    loop {
-  285|   163k|        let right = p.nth(0);
-  286|   163k|        if right_binds_tighter(left, right) {
-  287|  4.68k|            let mark = p.open_before(lhs);
-  288|  4.68k|            p.advance();
-  289|  4.68k|            // TODO: rhs none
-  290|  4.68k|            rec_expr(p, right);
-  291|  4.68k|            lhs = p.close(mark, TreeKind::BinaryExpr);
-  292|  4.68k|        } else {
-  293|   159k|            return Some(lhs);
+  284|   165k|    loop {
+  285|   165k|        let right = p.nth(0);
+  286|   165k|        if right_binds_tighter(left, right) {
+  287|  4.92k|            let mark = p.open_before(lhs);
+  288|  4.92k|            p.advance();
+  289|  4.92k|            // TODO: rhs none
+  290|  4.92k|            rec_expr(p, right);
+  291|  4.92k|            lhs = p.close(mark, TreeKind::BinaryExpr);
+  292|  4.92k|        } else {
+  293|   160k|            return Some(lhs);
   294|       |        }
   295|       |    }
-  296|   178k|}
+  296|   180k|}
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser17parse_source_file:
   479|  1.15k|    pub fn parse_source_file(mut self) -> (RawNode, Vec<SyntaxError>) {
   480|  1.15k|        source_file(&mut self);
   481|  1.15k|        self.build_tree()
   482|  1.15k|    }
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser5close:
-  499|   511k|    fn close(&mut self, mark: MarkOpened, kind: TreeKind) -> MarkClosed {
-  500|   511k|        self.events[mark.index] = Event::Open { kind };
-  501|   511k|        self.events.push(Event::Close);
-  502|   511k|        MarkClosed::new(mark.index)
-  503|   511k|    }
+  499|   515k|    fn close(&mut self, mark: MarkOpened, kind: TreeKind) -> MarkClosed {
+  500|   515k|        self.events[mark.index] = Event::Open { kind };
+  501|   515k|        self.events.push(Event::Close);
+  502|   515k|        MarkClosed::new(mark.index)
+  503|   515k|    }
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser7advance:
-  527|   352k|    fn advance(&mut self) {
-  528|   352k|        assert!(!self.is_out_of_tokens());
-  529|   352k|        self.fuel.set(Self::MAX_FUEL);
-  530|   352k|
-  531|   352k|        self.events.push(Event::Advance);
-  532|   352k|        self.offset += self.tokens[self.pos].total_len();
-  533|   352k|        self.pos += 1;
-  534|   352k|    }
+  527|   357k|    fn advance(&mut self) {
+  528|   357k|        assert!(!self.is_out_of_tokens());
+  529|   357k|        self.fuel.set(Self::MAX_FUEL);
+  530|   357k|
+  531|   357k|        self.events.push(Event::Advance);
+  532|   357k|        self.offset += self.tokens[self.pos].total_len();
+  533|   357k|        self.pos += 1;
+  534|   357k|    }
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser3nth:
-  536|  2.53M|    fn nth(&self, lookahead: usize) -> TokenKind {
-  537|  2.53M|        let fuel = self.fuel.get();
-  538|  2.53M|        assert!(fuel != 0, "parser is stuck");
-  539|  2.53M|        self.fuel.set(fuel - 1);
-  540|  2.53M|
-  541|  2.53M|        self.tokens
-  542|  2.53M|            .get(self.pos + lookahead)
-  543|  2.53M|            .map_or(TokenKind::Eof, |it| it.kind())
-  544|  2.53M|    }
+  536|  2.55M|    fn nth(&self, lookahead: usize) -> TokenKind {
+  537|  2.55M|        let fuel = self.fuel.get();
+  538|  2.55M|        assert!(fuel != 0, "parser is stuck");
+  539|  2.55M|        self.fuel.set(fuel - 1);
+  540|  2.55M|
+  541|  2.55M|        self.tokens
+  542|  2.55M|            .get(self.pos + lookahead)
+  543|  2.55M|            .map_or(TokenKind::Eof, |it| it.kind())
+  544|  2.55M|    }
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser16is_out_of_tokens:
-  546|   352k|    fn is_out_of_tokens(&self) -> bool {
-  547|   352k|        self.pos == self.tokens.len()
-  548|   352k|    }
+  546|   357k|    fn is_out_of_tokens(&self) -> bool {
+  547|   357k|        self.pos == self.tokens.len()
+  548|   357k|    }
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser9is_at_eof:
-  554|   480k|    fn is_at_eof(&self) -> bool {
-  555|   480k|        self.is_at(TokenKind::Eof)
-  556|   480k|    }
+  554|   486k|    fn is_at_eof(&self) -> bool {
+  555|   486k|        self.is_at(TokenKind::Eof)
+  556|   486k|    }
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser9is_at_any:
-  558|   433k|    fn is_at_any(&self, set: &[TokenKind]) -> bool {
-  559|   433k|        set.contains(&self.nth(0))
-  560|   433k|    }
+  558|   434k|    fn is_at_any(&self, set: &[TokenKind]) -> bool {
+  559|   434k|        set.contains(&self.nth(0))
+  560|   434k|    }
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser3eat:
-  562|   388k|    fn eat(&mut self, kind: TokenKind) -> bool {
-  563|   388k|        if self.is_at(kind) {
-  564|   174k|            self.advance();
-  565|   174k|            true
+  562|   392k|    fn eat(&mut self, kind: TokenKind) -> bool {
+  563|   392k|        if self.is_at(kind) {
+  564|   176k|            self.advance();
+  565|   176k|            true
   566|       |        } else {
-  567|   214k|            false
+  567|   216k|            false
   568|       |        }
-  569|   388k|    }
+  569|   392k|    }
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser18advance_with_error:
-  589|   155k|    fn advance_with_error(&mut self, error: &str) {
-  590|   155k|        let m = self.open();
-  591|   155k|
-  592|   155k|        let current = &self.tokens[self.pos];
-  593|   155k|        self.error(SyntaxError::Generic {
-  594|   155k|            message: error.to_string(),
-  595|   155k|            span: Span {
-  596|   155k|                start: self.offset,
-  597|   155k|                end: self.offset + current.text_len(),
-  598|   155k|            },
-  599|   155k|        });
-  600|   155k|        if !self.is_at_eof() {
-  601|   152k|            self.advance();
-  602|   152k|        }
+  589|   158k|    fn advance_with_error(&mut self, error: &str) {
+  590|   158k|        let m = self.open();
+  591|   158k|
+  592|   158k|        let current = &self.tokens[self.pos];
+  593|   158k|        self.error(SyntaxError::Generic {
+  594|   158k|            message: error.to_string(),
+  595|   158k|            span: Span {
+  596|   158k|                start: self.offset,
+  597|   158k|                end: self.offset + current.text_len(),
+  598|   158k|            },
+  599|   158k|        });
+  600|   158k|        if !self.is_at_eof() {
+  601|   154k|            self.advance();
+  602|   154k|        }
   603|       |
-  604|   155k|        self.close(m, TreeKind::Unknown);
-  605|   155k|    }
+  604|   158k|        self.close(m, TreeKind::Unknown);
+  605|   158k|    }
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser5error:
-  607|   368k|    fn error(&mut self, error: SyntaxError) {
-  608|   368k|        self.events.push(Event::Error(error));
-  609|   368k|    }
+  607|   372k|    fn error(&mut self, error: SyntaxError) {
+  608|   372k|        self.events.push(Event::Error(error));
+  609|   372k|    }
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser5empty:
-  611|  4.28k|    fn empty(&mut self) {
-  612|  4.28k|        self.scope(TreeKind::Empty, |_| {});
-  613|  4.28k|    }
+  611|  4.59k|    fn empty(&mut self) {
+  612|  4.59k|        self.scope(TreeKind::Empty, |_| {});
+  613|  4.59k|    }
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser10build_tree:
   615|  1.15k|    fn build_tree(self) -> (RawNode, Vec<SyntaxError>) {
   616|  1.15k|        let mut tokens = self.tokens.into_iter();
@@ -909,31 +909,31 @@ _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser10build_tree:
   623|  1.15k|        // that the stack is non-empty inside the loop.
   624|  1.15k|        assert!(matches!(events.pop(), Some(Event::Close)));
   625|       |
-  626|  1.82M|        for event in events {
-  627|  1.82M|            match event {
+  626|  1.84M|        for event in events {
+  627|  1.84M|            match event {
   628|       |                // Starting a new node; just push an empty tree to the stack.
-  629|   553k|                Event::Open { kind } => stack.push(RawNodeBuilder::new(kind)),
+  629|   558k|                Event::Open { kind } => stack.push(RawNodeBuilder::new(kind)),
   630|       |                // A tree is done.
   631|       |                // Pop it off the stack and append to a new current tree.
-  632|   551k|                Event::Close => {
-  633|   551k|                    let tree = stack.pop().unwrap().build();
-  634|   551k|                    stack
-  635|   551k|                        .last_mut()
-  636|   551k|                        // If we don't pop the last `Close` before this loop,
-  637|   551k|                        // this unwrap would trigger for it.
-  638|   551k|                        .unwrap()
-  639|   551k|                        .add_child(NodeOrToken::Node(tree));
-  640|   551k|                }
+  632|   557k|                Event::Close => {
+  633|   557k|                    let tree = stack.pop().unwrap().build();
+  634|   557k|                    stack
+  635|   557k|                        .last_mut()
+  636|   557k|                        // If we don't pop the last `Close` before this loop,
+  637|   557k|                        // this unwrap would trigger for it.
+  638|   557k|                        .unwrap()
+  639|   557k|                        .add_child(NodeOrToken::Node(tree));
+  640|   557k|                }
   641|       |                // Consume a token and append it to the current tree
-  642|   352k|                Event::Advance => {
-  643|   352k|                    let token = tokens.next().unwrap();
-  644|   352k|                    stack
-  645|   352k|                        .last_mut()
-  646|   352k|                        .unwrap()
-  647|   352k|                        .add_child(NodeOrToken::Token(token));
-  648|   352k|                }
+  642|   357k|                Event::Advance => {
+  643|   357k|                    let token = tokens.next().unwrap();
+  644|   357k|                    stack
+  645|   357k|                        .last_mut()
+  646|   357k|                        .unwrap()
+  647|   357k|                        .add_child(NodeOrToken::Token(token));
+  648|   357k|                }
   649|       |                // An error occurred, record it and continue
-  650|   368k|                Event::Error(error) => errors.push(error),
+  650|   372k|                Event::Error(error) => errors.push(error),
   651|       |            }
   652|       |        }
   653|       |
@@ -945,12 +945,12 @@ _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser10build_tree:
   659|  1.15k|        (stack.pop().unwrap().build(), errors)
   660|  1.15k|    }
 _RNvMs1_NtCslYuo9QnQJS9_5hedge6parserNtB5_10MarkClosed3new:
-  670|   553k|    fn new(index: usize) -> Self {
-  671|   553k|        Self { index }
-  672|   553k|    }
+  670|   558k|    fn new(index: usize) -> Self {
+  671|   558k|        Self { index }
+  672|   558k|    }
 _RNvNtCslYuo9QnQJS9_5hedge6parser10param_list:
-  123|  7.59k|fn param_list(p: &mut Parser, r_delim: TokenKind, flavor: ParamFlavor) {
-  124|  7.59k|    p.scope(TreeKind::ParamList, |p| {
+  123|  7.63k|fn param_list(p: &mut Parser, r_delim: TokenKind, flavor: ParamFlavor) {
+  124|  7.63k|    p.scope(TreeKind::ParamList, |p| {
   125|       |        while !p.is_at(r_delim) && !p.is_at_eof() {
   126|       |            if p.is_at(TokenKind::Ident) {
   127|       |                param(p, flavor);
@@ -961,24 +961,24 @@ _RNvNtCslYuo9QnQJS9_5hedge6parser10param_list:
   132|       |                p.advance_with_error("expected parameter");
   133|       |            }
   134|       |        }
-  135|  7.59k|    });
-  136|  7.59k|}
+  135|  7.63k|    });
+  136|  7.63k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser10paren_expr:
-  360|  72.4k|fn paren_expr(p: &mut Parser) -> MarkClosed {
-  361|  72.4k|    assert!(p.is_at(Token!['(']));
+  360|  73.1k|fn paren_expr(p: &mut Parser) -> MarkClosed {
+  361|  73.1k|    assert!(p.is_at(Token!['(']));
   362|       |
-  363|  72.4k|    p.scope(TreeKind::ParenExpr, |p| {
+  363|  73.1k|    p.scope(TreeKind::ParenExpr, |p| {
   364|       |        p.expect(Token!['(']);
   365|       |        expr(p);
   366|       |        p.expect(Token![')']);
-  367|  72.4k|    })
-  368|  72.4k|}
+  367|  73.1k|    })
+  368|  73.1k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser9type_expr:
-  173|  1.65k|fn type_expr(p: &mut Parser) {
-  174|  1.65k|    p.scope(TreeKind::TypeExpr, |p| {
+  173|  1.69k|fn type_expr(p: &mut Parser) {
+  174|  1.69k|    p.scope(TreeKind::TypeExpr, |p| {
   175|       |        p.expect(TokenKind::Ident);
-  176|  1.65k|    });
-  177|  1.65k|}
+  176|  1.69k|    });
+  177|  1.69k|}
 _RNvNtCslYuo9QnQJS9_5hedge6parser9item_list:
    56|  1.15k|fn item_list(p: &mut Parser) {
    57|  1.15k|    p.scope(TreeKind::ItemList, |p| {
@@ -992,15 +992,15 @@ _RNvNtCslYuo9QnQJS9_5hedge6parser9item_list:
    65|  1.15k|    });
    66|  1.15k|}
 _RNvMNtCslYuo9QnQJS9_5hedge6parserNtB2_11ParamFlavor7r_delim:
-  102|  10.6k|    fn r_delim(self) -> TokenKind {
-  103|  10.6k|        match self {
-  104|  3.56k|            Self::Function => Token![')'],
-  105|  7.08k|            Self::Lambda => Token![|],
+  102|  10.9k|    fn r_delim(self) -> TokenKind {
+  103|  10.9k|        match self {
+  104|  3.59k|            Self::Function => Token![')'],
+  105|  7.36k|            Self::Lambda => Token![|],
   106|       |        }
-  107|  10.6k|    }
+  107|  10.9k|    }
 _RNvNtCslYuo9QnQJS9_5hedge6parser5block:
-  202|  54.6k|fn block(p: &mut Parser) {
-  203|  54.6k|    p.scope(TreeKind::Block, |p| {
+  202|  55.5k|fn block(p: &mut Parser) {
+  203|  55.5k|    p.scope(TreeKind::Block, |p| {
   204|       |        let stmt_list_mark = p.open();
   205|       |
   206|       |        while !p.is_at(Token!['}']) && !p.is_at_eof() {
@@ -1030,8 +1030,8 @@ _RNvNtCslYuo9QnQJS9_5hedge6parser5block:
   230|       |        }
   231|       |
   232|       |        p.close(stmt_list_mark, TreeKind::StmtList);
-  233|  54.6k|    });
-  234|  54.6k|}
+  233|  55.5k|    });
+  234|  55.5k|}
 _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser3new:
   468|  1.15k|    pub fn new(tokens: Vec<RawToken>) -> Self {
   469|  1.15k|        Self {
@@ -1043,66 +1043,66 @@ _RNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB4_6Parser3new:
   475|  1.15k|        }
   476|  1.15k|    }
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_11lambda_expr0EB7_:
-  485|  5.50k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  5.50k|        let mark = self.open();
-  487|  5.50k|        body(self);
-  488|  5.50k|        self.close(mark, kind)
-  489|  5.50k|    }
+  485|  5.53k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  5.53k|        let mark = self.open();
+  487|  5.53k|        body(self);
+  488|  5.53k|        self.close(mark, kind)
+  489|  5.53k|    }
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser12literal_expr0B5_:
-  347|  3.82k|    p.scope(TreeKind::LiteralExpr, |p| {
-  348|  3.82k|        p.advance();
-  349|  3.82k|    })
+  347|  3.49k|    p.scope(TreeKind::LiteralExpr, |p| {
+  348|  3.49k|        p.advance();
+  349|  3.49k|    })
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser7if_expr0B5_:
-  373|  2.24k|    p.scope(TreeKind::IfExpr, |p| {
-  374|  2.24k|        p.expect(Token![if]);
-  375|  2.24k|
-  376|  2.24k|        let condition_mark = expr(p);
-  377|  2.24k|        if condition_mark.is_none() {
-  378|    836|            p.advance_with_error("expected a condition");
-  379|  1.40k|        }
+  373|  2.40k|    p.scope(TreeKind::IfExpr, |p| {
+  374|  2.40k|        p.expect(Token![if]);
+  375|  2.40k|
+  376|  2.40k|        let condition_mark = expr(p);
+  377|  2.40k|        if condition_mark.is_none() {
+  378|    960|            p.advance_with_error("expected a condition");
+  379|  1.44k|        }
   380|       |
-  381|  2.24k|        if p.is_at(Token!['{']) {
-  382|    532|            block_expr(p);
-  383|  1.71k|        }
+  381|  2.40k|        if p.is_at(Token!['{']) {
+  382|    639|            block_expr(p);
+  383|  1.76k|        }
   384|       |
-  385|  2.24k|        if p.is_at(Token![else]) {
-  386|    266|            p.expect(Token![else]);
-  387|    266|
-  388|    266|            match p.nth(0) {
-  389|    108|                Token!['{'] => {
-  390|    108|                    block_expr(p);
-  391|    108|                }
+  385|  2.40k|        if p.is_at(Token![else]) {
+  386|    235|            p.expect(Token![else]);
+  387|    235|
+  388|    235|            match p.nth(0) {
+  389|     78|                Token!['{'] => {
+  390|     78|                    block_expr(p);
+  391|     78|                }
   392|      0|                Token![if] => {
   393|      0|                    if_expr(p);
   394|      0|                }
-  395|    158|                _ => p.advance_with_error("expected a block or another if expression"),
+  395|    157|                _ => p.advance_with_error("expected a block or another if expression"),
   396|       |            }
-  397|  1.97k|        }
-  398|  2.24k|    })
+  397|  2.17k|        }
+  398|  2.40k|    })
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser8function0B5_:
-   71|  2.63k|    p.scope(TreeKind::Function, |p| {
-   72|  2.63k|        p.expect(Token![fn]);
-   73|  2.63k|        p.expect(TokenKind::Ident);
-   74|  2.63k|        if p.is_at(Token!['(']) {
-   75|  2.08k|            params(p, ParamFlavor::Function);
-   76|  2.08k|        }
-   77|  2.63k|        if p.is_at(Token![->]) {
+   71|  2.67k|    p.scope(TreeKind::Function, |p| {
+   72|  2.67k|        p.expect(Token![fn]);
+   73|  2.67k|        p.expect(TokenKind::Ident);
+   74|  2.67k|        if p.is_at(Token!['(']) {
+   75|  2.10k|            params(p, ParamFlavor::Function);
+   76|  2.10k|        }
+   77|  2.67k|        if p.is_at(Token![->]) {
    78|     70|            ret_type_expr(p);
-   79|  2.56k|        } else {
-   80|  2.56k|            p.empty();
-   81|  2.56k|        }
-   82|  2.63k|        if p.is_at(Token!['{']) {
-   83|  1.22k|            block_expr(p);
-   84|  1.41k|        }
-   85|  2.63k|    });
+   79|  2.60k|        } else {
+   80|  2.60k|            p.empty();
+   81|  2.60k|        }
+   82|  2.67k|        if p.is_at(Token!['{']) {
+   83|  1.23k|            block_expr(p);
+   84|  1.44k|        }
+   85|  2.67k|    });
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser8let_stmt0B5_:
-  239|     87|    p.scope(TreeKind::LetStmt, |p| {
-  240|     87|        p.expect(Token![let]);
-  241|     87|        p.expect(TokenKind::Ident);
-  242|     87|        p.expect(Token![=]);
-  243|     87|        expr(p);
-  244|     87|        p.expect(Token![;]);
-  245|     87|    });
+  239|     95|    p.scope(TreeKind::LetStmt, |p| {
+  240|     95|        p.expect(Token![let]);
+  241|     95|        p.expect(TokenKind::Ident);
+  242|     95|        p.expect(Token![=]);
+  243|     95|        expr(p);
+  244|     95|        p.expect(Token![;]);
+  245|     95|    });
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser13ret_type_expr0B5_:
   167|    111|    p.scope(TreeKind::RetTypeExpr, |p| {
   168|    111|        p.expect(Token![->]);
@@ -1114,63 +1114,63 @@ _RNCNvNtCslYuo9QnQJS9_5hedge6parser11source_file0B5_:
    52|  1.15k|        p.expect(TokenKind::Eof);
    53|  1.15k|    });
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser10block_expr0B5_:
-  195|  54.6k|    p.scope(TreeKind::BlockExpr, |p| {
-  196|  54.6k|        p.expect(Token!['{']);
-  197|  54.6k|        block(p);
-  198|  54.6k|        p.expect(Token!['}']);
-  199|  54.6k|    })
+  195|  55.5k|    p.scope(TreeKind::BlockExpr, |p| {
+  196|  55.5k|        p.expect(Token!['{']);
+  197|  55.5k|        block(p);
+  198|  55.5k|        p.expect(Token!['}']);
+  199|  55.5k|    })
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser11return_stmt0B5_:
-  251|  1.08k|    p.scope(TreeKind::ReturnStmt, |p| {
-  252|  1.08k|        p.expect(Token![return]);
-  253|  1.08k|        if p.is_at_any(EXPR_FIRST) {
-  254|    878|            expr(p);
-  255|    878|        } else {
-  256|    205|            p.empty();
-  257|    205|        }
-  258|  1.08k|        p.expect(Token![;]);
-  259|  1.08k|    });
+  251|  1.22k|    p.scope(TreeKind::ReturnStmt, |p| {
+  252|  1.22k|        p.expect(Token![return]);
+  253|  1.22k|        if p.is_at_any(EXPR_FIRST) {
+  254|    979|            expr(p);
+  255|    979|        } else {
+  256|    243|            p.empty();
+  257|    243|        }
+  258|  1.22k|        p.expect(Token![;]);
+  259|  1.22k|    });
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser10ident_expr0B5_:
-  355|  18.0k|    p.scope(TreeKind::IdentExpr, |p| {
-  356|  18.0k|        p.advance();
-  357|  18.0k|    })
+  355|  17.8k|    p.scope(TreeKind::IdentExpr, |p| {
+  356|  17.8k|        p.advance();
+  357|  17.8k|    })
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser8for_expr0B5_:
-  404|  4.42k|    p.scope(TreeKind::ForExpr, |p| {
-  405|  4.42k|        p.expect(Token![for]);
-  406|  4.42k|        p.expect(TokenKind::Ident);
-  407|  4.42k|        p.expect(Token![in]);
-  408|  4.42k|
-  409|  4.42k|        expr(p);
-  410|  4.42k|        p.expect(Token![.]);
-  411|  4.42k|        p.expect(Token![.]);
-  412|  4.42k|        expr(p);
-  413|  4.42k|
-  414|  4.42k|        // TODO: do we need to check if at every time?
-  415|  4.42k|        if p.is_at(Token!['{']) {
-  416|    205|            block_expr(p);
-  417|  4.21k|        }
-  418|  4.42k|    })
+  404|  4.53k|    p.scope(TreeKind::ForExpr, |p| {
+  405|  4.53k|        p.expect(Token![for]);
+  406|  4.53k|        p.expect(TokenKind::Ident);
+  407|  4.53k|        p.expect(Token![in]);
+  408|  4.53k|
+  409|  4.53k|        expr(p);
+  410|  4.53k|        p.expect(Token![.]);
+  411|  4.53k|        p.expect(Token![.]);
+  412|  4.53k|        expr(p);
+  413|  4.53k|
+  414|  4.53k|        // TODO: do we need to check if at every time?
+  415|  4.53k|        if p.is_at(Token!['{']) {
+  416|    238|            block_expr(p);
+  417|  4.29k|        }
+  418|  4.53k|    })
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser4args0B5_:
-  437|  16.7k|    p.scope(TreeKind::Args, |p| {
-  438|  16.7k|        p.expect(Token!['(']);
-  439|  16.7k|        arg_list(p);
-  440|  16.7k|        p.expect(Token![')']);
-  441|  16.7k|    });
+  437|  16.4k|    p.scope(TreeKind::Args, |p| {
+  438|  16.4k|        p.expect(Token!['(']);
+  439|  16.4k|        arg_list(p);
+  440|  16.4k|        p.expect(Token![')']);
+  441|  16.4k|    });
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser8arg_list0B5_:
-  445|  16.7k|    p.scope(TreeKind::ArgList, |p| {
-  446|  32.8k|        while !p.is_at(Token![')']) && !p.is_at_eof() {
-  447|  22.9k|            if p.is_at_any(EXPR_FIRST) {
-  448|  16.1k|                arg(p);
-  449|  16.1k|            } else {
-  450|  6.84k|                break;
+  445|  16.4k|    p.scope(TreeKind::ArgList, |p| {
+  446|  32.1k|        while !p.is_at(Token![')']) && !p.is_at_eof() {
+  447|  22.3k|            if p.is_at_any(EXPR_FIRST) {
+  448|  15.6k|                arg(p);
+  449|  15.6k|            } else {
+  450|  6.72k|                break;
   451|       |            }
   452|       |        }
-  453|  16.7k|    });
+  453|  16.4k|    });
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_11return_stmt0EB7_:
-  485|  1.08k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  1.08k|        let mark = self.open();
-  487|  1.08k|        body(self);
-  488|  1.08k|        self.close(mark, kind)
-  489|  1.08k|    }
+  485|  1.22k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  1.22k|        let mark = self.open();
+  487|  1.22k|        body(self);
+  488|  1.22k|        self.close(mark, kind)
+  489|  1.22k|    }
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_11source_file0EB7_:
   485|  1.15k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
   486|  1.15k|        let mark = self.open();
@@ -1178,23 +1178,23 @@ _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_11source_file0EB7_
   488|  1.15k|        self.close(mark, kind)
   489|  1.15k|    }
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_12literal_expr0EB7_:
-  485|  3.82k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  3.82k|        let mark = self.open();
-  487|  3.82k|        body(self);
-  488|  3.82k|        self.close(mark, kind)
-  489|  3.82k|    }
+  485|  3.49k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  3.49k|        let mark = self.open();
+  487|  3.49k|        body(self);
+  488|  3.49k|        self.close(mark, kind)
+  489|  3.49k|    }
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_4args0EB7_:
-  485|  16.7k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  16.7k|        let mark = self.open();
-  487|  16.7k|        body(self);
-  488|  16.7k|        self.close(mark, kind)
-  489|  16.7k|    }
+  485|  16.4k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  16.4k|        let mark = self.open();
+  487|  16.4k|        body(self);
+  488|  16.4k|        self.close(mark, kind)
+  489|  16.4k|    }
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_8function0EB7_:
-  485|  2.63k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  2.63k|        let mark = self.open();
-  487|  2.63k|        body(self);
-  488|  2.63k|        self.close(mark, kind)
-  489|  2.63k|    }
+  485|  2.67k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  2.67k|        let mark = self.open();
+  487|  2.67k|        body(self);
+  488|  2.67k|        self.close(mark, kind)
+  489|  2.67k|    }
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_9item_list0EB7_:
   485|  1.15k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
   486|  1.15k|        let mark = self.open();
@@ -1202,7 +1202,7 @@ _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_9item_list0EB7_:
   488|  1.15k|        self.close(mark, kind)
   489|  1.15k|    }
 _RNCNvNvNtCslYuo9QnQJS9_5hedge6parser19right_binds_tighter9tightness0B7_:
-  310|   836k|        .position(|level| level == &kind)
+  310|   844k|        .position(|level| level == &kind)
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_13ret_type_expr0EB7_:
   485|    111|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
   486|    111|        let mark = self.open();
@@ -1210,260 +1210,260 @@ _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_13ret_type_expr0EB
   488|    111|        self.close(mark, kind)
   489|    111|    }
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_7if_expr0EB7_:
-  485|  2.24k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  2.24k|        let mark = self.open();
-  487|  2.24k|        body(self);
-  488|  2.24k|        self.close(mark, kind)
-  489|  2.24k|    }
+  485|  2.40k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  2.40k|        let mark = self.open();
+  487|  2.40k|        body(self);
+  488|  2.40k|        self.close(mark, kind)
+  489|  2.40k|    }
 _RNCNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB6_6Parser3nth0B8_:
-  543|  2.53M|            .map_or(TokenKind::Eof, |it| it.kind())
+  543|  2.55M|            .map_or(TokenKind::Eof, |it| it.kind())
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser10paren_expr0B5_:
-  363|  72.4k|    p.scope(TreeKind::ParenExpr, |p| {
-  364|  72.4k|        p.expect(Token!['(']);
-  365|  72.4k|        expr(p);
-  366|  72.4k|        p.expect(Token![')']);
-  367|  72.4k|    })
+  363|  73.1k|    p.scope(TreeKind::ParenExpr, |p| {
+  364|  73.1k|        p.expect(Token!['(']);
+  365|  73.1k|        expr(p);
+  366|  73.1k|        p.expect(Token![')']);
+  367|  73.1k|    })
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser9item_list0B5_:
    57|  1.15k|    p.scope(TreeKind::ItemList, |p| {
-   58|  57.0k|        while !p.is_at_eof() {
-   59|  55.9k|            if p.is_at(Token![fn]) {
-   60|  2.63k|                function(p);
-   61|  53.2k|            } else {
-   62|  53.2k|                p.advance_with_error("expected a function");
-   63|  53.2k|            }
+   58|  58.7k|        while !p.is_at_eof() {
+   59|  57.6k|            if p.is_at(Token![fn]) {
+   60|  2.67k|                function(p);
+   61|  54.9k|            } else {
+   62|  54.9k|                p.advance_with_error("expected a function");
+   63|  54.9k|            }
    64|       |        }
    65|  1.15k|    });
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser11lambda_expr0B5_:
-  424|  5.50k|    p.scope(TreeKind::LambdaExpr, |p| {
-  425|  5.50k|        params(p, ParamFlavor::Lambda);
-  426|  5.50k|        if p.is_at(Token![->]) {
+  424|  5.53k|    p.scope(TreeKind::LambdaExpr, |p| {
+  425|  5.53k|        params(p, ParamFlavor::Lambda);
+  426|  5.53k|        if p.is_at(Token![->]) {
   427|     41|            ret_type_expr(p);
-  428|  5.46k|        }
+  428|  5.49k|        }
   429|       |
-  430|  5.50k|        expr(p);
-  431|  5.50k|    })
+  430|  5.53k|        expr(p);
+  431|  5.53k|    })
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser5param0B5_:
-  141|  3.05k|    p.scope(TreeKind::Param, |p| {
-  142|  3.05k|        p.expect(TokenKind::Ident);
-  143|  3.05k|
-  144|  3.05k|        match flavor {
-  145|  1.47k|            ParamFlavor::Function => {
-  146|  1.47k|                p.expect(Token![:]);
-  147|  1.47k|                type_expr(p);
-  148|  1.47k|            }
+  141|  3.32k|    p.scope(TreeKind::Param, |p| {
+  142|  3.32k|        p.expect(TokenKind::Ident);
+  143|  3.32k|
+  144|  3.32k|        match flavor {
+  145|  1.49k|            ParamFlavor::Function => {
+  146|  1.49k|                p.expect(Token![:]);
+  147|  1.49k|                type_expr(p);
+  148|  1.49k|            }
   149|       |            ParamFlavor::Lambda => {
-  150|  1.58k|                if p.eat(Token![:]) {
-  151|     73|                    type_expr(p);
-  152|  1.51k|                } else {
-  153|  1.51k|                    p.empty();
-  154|  1.51k|                }
+  150|  1.83k|                if p.eat(Token![:]) {
+  151|     86|                    type_expr(p);
+  152|  1.74k|                } else {
+  153|  1.74k|                    p.empty();
+  154|  1.74k|                }
   155|       |            }
   156|       |        }
   157|       |
-  158|  3.05k|        if !p.is_at(flavor.r_delim()) {
-  159|  2.68k|            p.expect(Token![,]);
-  160|  2.68k|        }
-  161|  3.05k|    });
+  158|  3.32k|        if !p.is_at(flavor.r_delim()) {
+  159|  2.94k|            p.expect(Token![,]);
+  160|  2.94k|        }
+  161|  3.32k|    });
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser3arg0B5_:
-  457|  16.1k|    p.scope(TreeKind::Arg, |p| {
-  458|  16.1k|        expr(p);
-  459|  16.1k|        if !p.is_at(Token![')']) {
-  460|  15.8k|            p.expect(Token![,]);
-  461|  15.8k|        }
-  462|  16.1k|    });
+  457|  15.6k|    p.scope(TreeKind::Arg, |p| {
+  458|  15.6k|        expr(p);
+  459|  15.6k|        if !p.is_at(Token![')']) {
+  460|  15.4k|            p.expect(Token![,]);
+  461|  15.4k|        }
+  462|  15.6k|    });
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB2_5empty0EB7_:
-  485|  4.28k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  4.28k|        let mark = self.open();
-  487|  4.28k|        body(self);
-  488|  4.28k|        self.close(mark, kind)
-  489|  4.28k|    }
+  485|  4.59k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  4.59k|        let mark = self.open();
+  487|  4.59k|        body(self);
+  488|  4.59k|        self.close(mark, kind)
+  489|  4.59k|    }
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_10ident_expr0EB7_:
-  485|  18.0k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  18.0k|        let mark = self.open();
-  487|  18.0k|        body(self);
-  488|  18.0k|        self.close(mark, kind)
-  489|  18.0k|    }
+  485|  17.8k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  17.8k|        let mark = self.open();
+  487|  17.8k|        body(self);
+  488|  17.8k|        self.close(mark, kind)
+  489|  17.8k|    }
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser9type_expr0B5_:
-  174|  1.65k|    p.scope(TreeKind::TypeExpr, |p| {
-  175|  1.65k|        p.expect(TokenKind::Ident);
-  176|  1.65k|    });
+  174|  1.69k|    p.scope(TreeKind::TypeExpr, |p| {
+  175|  1.69k|        p.expect(TokenKind::Ident);
+  176|  1.69k|    });
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser5block0B5_:
-  203|  54.6k|    p.scope(TreeKind::Block, |p| {
-  204|  54.6k|        let stmt_list_mark = p.open();
+  203|  55.5k|    p.scope(TreeKind::Block, |p| {
+  204|  55.5k|        let stmt_list_mark = p.open();
   205|       |
-  206|   132k|        while !p.is_at(Token!['}']) && !p.is_at_eof() {
+  206|   131k|        while !p.is_at(Token!['}']) && !p.is_at_eof() {
   207|   131k|            match p.nth(0) {
-  208|     87|                Token![let] => let_stmt(p),
-  209|  1.08k|                Token![return] => return_stmt(p),
-  210|   130k|                _ if p.is_at_any(EXPR_FIRST) => match expr(p) {
-  211|  67.5k|                    Some(mark) => {
-  212|  67.5k|                        if !p.is_at(Token!['}']) && !p.is_at_eof() {
-  213|  25.7k|                            let stmt_expr_mark = p.open_before(mark);
-  214|  25.7k|                            p.expect(Token![;]);
-  215|  25.7k|                            p.close(stmt_expr_mark, TreeKind::ExprStmt);
-  216|  25.7k|                        } else {
-  217|  41.7k|                            p.close_before(stmt_list_mark, TreeKind::StmtList, mark);
-  218|  41.7k|                            return;
+  208|     95|                Token![let] => let_stmt(p),
+  209|  1.22k|                Token![return] => return_stmt(p),
+  210|   129k|                _ if p.is_at_any(EXPR_FIRST) => match expr(p) {
+  211|  68.3k|                    Some(mark) => {
+  212|  68.3k|                        if !p.is_at(Token!['}']) && !p.is_at_eof() {
+  213|  25.4k|                            let stmt_expr_mark = p.open_before(mark);
+  214|  25.4k|                            p.expect(Token![;]);
+  215|  25.4k|                            p.close(stmt_expr_mark, TreeKind::ExprStmt);
+  216|  25.4k|                        } else {
+  217|  42.8k|                            p.close_before(stmt_list_mark, TreeKind::StmtList, mark);
+  218|  42.8k|                            return;
   219|       |                        }
   220|       |                    }
   221|      0|                    None => p.advance_with_error("expected an expression"),
   222|       |                },
   223|       |                _ => {
-  224|  62.6k|                    if p.is_at_any(STMT_RECOVERY) {
-  225|  12.1k|                        break;
-  226|  50.5k|                    }
-  227|  50.5k|                    p.advance_with_error("expected statement");
+  224|  61.4k|                    if p.is_at_any(STMT_RECOVERY) {
+  225|  11.8k|                        break;
+  226|  49.6k|                    }
+  227|  49.6k|                    p.advance_with_error("expected statement");
   228|       |                }
   229|       |            }
   230|       |        }
   231|       |
-  232|  12.9k|        p.close(stmt_list_mark, TreeKind::StmtList);
-  233|  54.6k|    });
+  232|  12.6k|        p.close(stmt_list_mark, TreeKind::StmtList);
+  233|  55.5k|    });
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_5block0EB7_:
-  485|  54.6k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  54.6k|        let mark = self.open();
-  487|  54.6k|        body(self);
-  488|  54.6k|        self.close(mark, kind)
-  489|  54.6k|    }
+  485|  55.5k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  55.5k|        let mark = self.open();
+  487|  55.5k|        body(self);
+  488|  55.5k|        self.close(mark, kind)
+  489|  55.5k|    }
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_5param0EB7_:
-  485|  3.05k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  3.05k|        let mark = self.open();
-  487|  3.05k|        body(self);
-  488|  3.05k|        self.close(mark, kind)
-  489|  3.05k|    }
+  485|  3.32k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  3.32k|        let mark = self.open();
+  487|  3.32k|        body(self);
+  488|  3.32k|        self.close(mark, kind)
+  489|  3.32k|    }
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_6params0EB7_:
-  485|  7.59k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  7.59k|        let mark = self.open();
-  487|  7.59k|        body(self);
-  488|  7.59k|        self.close(mark, kind)
-  489|  7.59k|    }
+  485|  7.63k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  7.63k|        let mark = self.open();
+  487|  7.63k|        body(self);
+  488|  7.63k|        self.close(mark, kind)
+  489|  7.63k|    }
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_8arg_list0EB7_:
-  485|  16.7k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  16.7k|        let mark = self.open();
-  487|  16.7k|        body(self);
-  488|  16.7k|        self.close(mark, kind)
-  489|  16.7k|    }
+  485|  16.4k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  16.4k|        let mark = self.open();
+  487|  16.4k|        body(self);
+  488|  16.4k|        self.close(mark, kind)
+  489|  16.4k|    }
 _RNCNvMs_NtCslYuo9QnQJS9_5hedge6parserNtB6_6Parser5empty0B8_:
-  612|  4.28k|        self.scope(TreeKind::Empty, |_| {});
+  612|  4.59k|        self.scope(TreeKind::Empty, |_| {});
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_10block_expr0EB7_:
-  485|  54.6k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  54.6k|        let mark = self.open();
-  487|  54.6k|        body(self);
-  488|  54.6k|        self.close(mark, kind)
-  489|  54.6k|    }
+  485|  55.5k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  55.5k|        let mark = self.open();
+  487|  55.5k|        body(self);
+  488|  55.5k|        self.close(mark, kind)
+  489|  55.5k|    }
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser10param_list0B5_:
-  124|  7.59k|    p.scope(TreeKind::ParamList, |p| {
-  125|  41.9k|        while !p.is_at(r_delim) && !p.is_at_eof() {
-  126|  37.6k|            if p.is_at(TokenKind::Ident) {
-  127|  3.05k|                param(p, flavor);
-  128|  3.05k|            } else {
-  129|  34.5k|                if p.is_at_any(PARAM_LIST_RECOVERY) {
-  130|  3.24k|                    break;
-  131|  31.3k|                }
-  132|  31.3k|                p.advance_with_error("expected parameter");
+  124|  7.63k|    p.scope(TreeKind::ParamList, |p| {
+  125|  43.7k|        while !p.is_at(r_delim) && !p.is_at_eof() {
+  126|  39.3k|            if p.is_at(TokenKind::Ident) {
+  127|  3.32k|                param(p, flavor);
+  128|  3.32k|            } else {
+  129|  36.0k|                if p.is_at_any(PARAM_LIST_RECOVERY) {
+  130|  3.22k|                    break;
+  131|  32.8k|                }
+  132|  32.8k|                p.advance_with_error("expected parameter");
   133|       |            }
   134|       |        }
-  135|  7.59k|    });
+  135|  7.63k|    });
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_10paren_expr0EB7_:
-  485|  72.4k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  72.4k|        let mark = self.open();
-  487|  72.4k|        body(self);
-  488|  72.4k|        self.close(mark, kind)
-  489|  72.4k|    }
+  485|  73.1k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  73.1k|        let mark = self.open();
+  487|  73.1k|        body(self);
+  488|  73.1k|        self.close(mark, kind)
+  489|  73.1k|    }
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_8let_stmt0EB7_:
-  485|     87|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|     87|        let mark = self.open();
-  487|     87|        body(self);
-  488|     87|        self.close(mark, kind)
-  489|     87|    }
+  485|     95|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|     95|        let mark = self.open();
+  487|     95|        body(self);
+  488|     95|        self.close(mark, kind)
+  489|     95|    }
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_9type_expr0EB7_:
-  485|  1.65k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  1.65k|        let mark = self.open();
-  487|  1.65k|        body(self);
-  488|  1.65k|        self.close(mark, kind)
-  489|  1.65k|    }
+  485|  1.69k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  1.69k|        let mark = self.open();
+  487|  1.69k|        body(self);
+  488|  1.69k|        self.close(mark, kind)
+  489|  1.69k|    }
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_3arg0EB7_:
-  485|  16.1k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  16.1k|        let mark = self.open();
-  487|  16.1k|        body(self);
-  488|  16.1k|        self.close(mark, kind)
-  489|  16.1k|    }
+  485|  15.6k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  15.6k|        let mark = self.open();
+  487|  15.6k|        body(self);
+  488|  15.6k|        self.close(mark, kind)
+  489|  15.6k|    }
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_8for_expr0EB7_:
-  485|  4.42k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  4.42k|        let mark = self.open();
-  487|  4.42k|        body(self);
-  488|  4.42k|        self.close(mark, kind)
-  489|  4.42k|    }
+  485|  4.53k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  4.53k|        let mark = self.open();
+  487|  4.53k|        body(self);
+  488|  4.53k|        self.close(mark, kind)
+  489|  4.53k|    }
 _RNCNvNtCslYuo9QnQJS9_5hedge6parser6params0B5_:
-  116|  7.59k|    p.scope(TreeKind::Params, |p| {
-  117|  7.59k|        p.expect(l_delim);
-  118|  7.59k|        param_list(p, r_delim, flavor);
-  119|  7.59k|        p.expect(r_delim);
-  120|  7.59k|    });
+  116|  7.63k|    p.scope(TreeKind::Params, |p| {
+  117|  7.63k|        p.expect(l_delim);
+  118|  7.63k|        param_list(p, r_delim, flavor);
+  119|  7.63k|        p.expect(r_delim);
+  120|  7.63k|    });
 _RINvMs_NtCslYuo9QnQJS9_5hedge6parserNtB5_6Parser5scopeNCNvB5_10param_list0EB7_:
-  485|  7.59k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
-  486|  7.59k|        let mark = self.open();
-  487|  7.59k|        body(self);
-  488|  7.59k|        self.close(mark, kind)
-  489|  7.59k|    }
+  485|  7.63k|    fn scope(&mut self, kind: TreeKind, body: impl Fn(&mut Self)) -> MarkClosed {
+  486|  7.63k|        let mark = self.open();
+  487|  7.63k|        body(self);
+  488|  7.63k|        self.close(mark, kind)
+  489|  7.63k|    }
 
 _RNvMs8_NtNtCslYuo9QnQJS9_5hedge6syntax3cstINtNtB7_13utility_types11NodeOrTokenNtB5_10SyntaxNodeNtB5_11SyntaxTokenE12next_sibling:
-  483|   904k|    pub fn next_sibling(&self) -> Option<Self> {
-  484|   904k|        match self {
-  485|   551k|            Self::Node(it) => it.next_sibling(),
-  486|   352k|            Self::Token(it) => it.next_sibling(),
+  483|   915k|    pub fn next_sibling(&self) -> Option<Self> {
+  484|   915k|        match self {
+  485|   557k|            Self::Node(it) => it.next_sibling(),
+  486|   357k|            Self::Token(it) => it.next_sibling(),
   487|       |        }
-  488|   904k|    }
+  488|   915k|    }
 _RNvMs8_NtNtCslYuo9QnQJS9_5hedge6syntax3cstINtNtB7_13utility_types11NodeOrTokenNtB5_10SyntaxNodeNtB5_11SyntaxTokenE6parent:
-  469|   499k|    pub fn parent(&self) -> Option<&SyntaxNode> {
-  470|   499k|        match self {
-  471|   316k|            Self::Node(it) => it.parent(),
-  472|   182k|            Self::Token(it) => it.parent(),
+  469|   503k|    pub fn parent(&self) -> Option<&SyntaxNode> {
+  470|   503k|        match self {
+  471|   318k|            Self::Node(it) => it.parent(),
+  472|   184k|            Self::Token(it) => it.parent(),
   473|       |        }
-  474|   499k|    }
+  474|   503k|    }
 _RNvMs8_NtNtCslYuo9QnQJS9_5hedge6syntax3cstINtNtB7_13utility_types11NodeOrTokenNtB5_10SyntaxNodeNtB5_11SyntaxTokenE3new:
-  448|   904k|    pub fn new(raw: RawNodeChild, offset: usize, parent: Option<(SyntaxNode, usize)>) -> Self {
-  449|   904k|        match raw {
-  450|   551k|            NodeOrToken::Node(node) => Self::Node(SyntaxNode::new(node, offset, parent)),
-  451|   352k|            NodeOrToken::Token(token) => Self::Token(SyntaxToken::new(token, offset, parent)),
+  448|   915k|    pub fn new(raw: RawNodeChild, offset: usize, parent: Option<(SyntaxNode, usize)>) -> Self {
+  449|   915k|        match raw {
+  450|   557k|            NodeOrToken::Node(node) => Self::Node(SyntaxNode::new(node, offset, parent)),
+  451|   357k|            NodeOrToken::Token(token) => Self::Token(SyntaxToken::new(token, offset, parent)),
   452|       |        }
-  453|   904k|    }
+  453|   915k|    }
 _RNvMs3_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_11SyntaxToken3new:
-  291|   352k|    pub fn new(raw: RawToken, offset: usize, parent: Option<(SyntaxNode, usize)>) -> Self {
-  292|   352k|        Self(Rc::new(SyntaxTokenData {
-  293|   352k|            raw,
-  294|   352k|            offset,
-  295|   352k|            parent,
-  296|   352k|        }))
-  297|   352k|    }
+  291|   357k|    pub fn new(raw: RawToken, offset: usize, parent: Option<(SyntaxNode, usize)>) -> Self {
+  292|   357k|        Self(Rc::new(SyntaxTokenData {
+  293|   357k|            raw,
+  294|   357k|            offset,
+  295|   357k|            parent,
+  296|   357k|        }))
+  297|   357k|    }
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB2_10SyntaxNode12next_sibling:
-  179|   551k|    pub fn next_sibling(&self) -> Option<SyntaxNodeChild> {
-  180|   551k|        let (parent, idx) = self.0.parent.as_ref()?;
-  181|   551k|        parent.nth_child(idx + 1)
-  182|   551k|    }
+  179|   557k|    pub fn next_sibling(&self) -> Option<SyntaxNodeChild> {
+  180|   557k|        let (parent, idx) = self.0.parent.as_ref()?;
+  181|   557k|        parent.nth_child(idx + 1)
+  182|   557k|    }
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB2_10SyntaxNode3new:
-   40|   553k|    pub fn new(raw: RawNode, offset: usize, parent: Option<(Self, usize)>) -> Self {
-   41|   553k|        Self(Rc::new(SyntaxNodeData {
-   42|   553k|            raw,
-   43|   553k|            offset,
-   44|   553k|            parent,
-   45|   553k|        }))
-   46|   553k|    }
+   40|   558k|    pub fn new(raw: RawNode, offset: usize, parent: Option<(Self, usize)>) -> Self {
+   41|   558k|        Self(Rc::new(SyntaxNodeData {
+   42|   558k|            raw,
+   43|   558k|            offset,
+   44|   558k|            parent,
+   45|   558k|        }))
+   46|   558k|    }
 _RNvMs3_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_11SyntaxToken6offset:
-  319|   705k|    pub fn offset(&self) -> usize {
-  320|   705k|        self.0.offset
-  321|   705k|    }
+  319|   714k|    pub fn offset(&self) -> usize {
+  320|   714k|        self.0.offset
+  321|   714k|    }
 _RNvMs3_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_11SyntaxToken3raw:
-  346|  1.76M|    fn raw(&self) -> &RawToken {
-  347|  1.76M|        &self.0.raw
-  348|  1.76M|    }
+  346|  1.78M|    fn raw(&self) -> &RawToken {
+  347|  1.78M|        &self.0.raw
+  348|  1.78M|    }
 _RNvXsa_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_8PreorderNtNtNtNtCs9nhK3FOW46N_4core4iter6traits8iterator8Iterator4next:
-  540|  1.81M|    fn next(&mut self) -> Option<Self::Item> {
-  541|  1.81M|        let current_event = self.next_event.take();
-  542|  1.81M|
-  543|  1.81M|        self.next_event = current_event
-  544|  1.81M|            .as_ref()
-  545|  1.81M|            .and_then(|current_event| match current_event {
+  540|  1.83M|    fn next(&mut self) -> Option<Self::Item> {
+  541|  1.83M|        let current_event = self.next_event.take();
+  542|  1.83M|
+  543|  1.83M|        self.next_event = current_event
+  544|  1.83M|            .as_ref()
+  545|  1.83M|            .and_then(|current_event| match current_event {
   546|       |                WalkEvent::Enter(child) => match child {
   547|       |                    NodeOrToken::Node(node) => node
   548|       |                        .nth_child(0)
@@ -1484,42 +1484,42 @@ _RNvXsa_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_8PreorderNtNtNtNtCs9nhK3FOW46N_4
   563|       |                        })
   564|       |                    }
   565|       |                }
-  566|  1.81M|            });
-  567|  1.81M|
-  568|  1.81M|        current_event
-  569|  1.81M|    }
+  566|  1.83M|            });
+  567|  1.83M|
+  568|  1.83M|        current_event
+  569|  1.83M|    }
 _RNvXsk_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_11SyntaxTokenNtNtCs9nhK3FOW46N_4core5clone5Clone5cloneB9_:
-   22|   352k|#[derive(Clone, PartialEq, Eq, Hash)]
+   22|   357k|#[derive(Clone, PartialEq, Eq, Hash)]
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB2_10SyntaxNode3raw:
-  100|  1.46M|    fn raw(&self) -> &RawNode {
-  101|  1.46M|        &self.0.raw
-  102|  1.46M|    }
+  100|  1.47M|    fn raw(&self) -> &RawNode {
+  101|  1.47M|        &self.0.raw
+  102|  1.47M|    }
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB2_10SyntaxNode9nth_child:
-  134|  1.45M|    pub fn nth_child(&self, idx: usize) -> Option<SyntaxNodeChild> {
-  135|  1.45M|        let (raw_child, rel_offset) = self.raw().nth_child(idx)?;
-  136|   904k|        let offset = self.offset() + rel_offset;
-  137|   904k|        let parent_with_idx = (self.clone(), idx);
-  138|   904k|        let syntax_child = SyntaxNodeChild::new(raw_child.clone(), offset, Some(parent_with_idx));
-  139|   904k|
-  140|   904k|        Some(syntax_child)
-  141|  1.45M|    }
+  134|  1.47M|    pub fn nth_child(&self, idx: usize) -> Option<SyntaxNodeChild> {
+  135|  1.47M|        let (raw_child, rel_offset) = self.raw().nth_child(idx)?;
+  136|   915k|        let offset = self.offset() + rel_offset;
+  137|   915k|        let parent_with_idx = (self.clone(), idx);
+  138|   915k|        let syntax_child = SyntaxNodeChild::new(raw_child.clone(), offset, Some(parent_with_idx));
+  139|   915k|
+  140|   915k|        Some(syntax_child)
+  141|  1.47M|    }
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB2_10SyntaxNode8preorder:
   201|  1.15k|    pub fn preorder(&self) -> Preorder {
   202|  1.15k|        Preorder::new(self.clone())
   203|  1.15k|    }
 _RNvMs3_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_11SyntaxToken15trailing_trivia:
-  315|   352k|    pub fn trailing_trivia(&self) -> &Trivia {
-  316|   352k|        self.raw().trailing_trivia()
-  317|   352k|    }
+  315|   357k|    pub fn trailing_trivia(&self) -> &Trivia {
+  316|   357k|        self.raw().trailing_trivia()
+  317|   357k|    }
 _RNvMs3_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_11SyntaxToken10total_span:
-  339|   352k|    pub fn total_span(&self) -> Span {
-  340|   352k|        Span {
-  341|   352k|            start: self.offset(),
-  342|   352k|            end: self.offset() + self.total_len(),
-  343|   352k|        }
-  344|   352k|    }
+  339|   357k|    pub fn total_span(&self) -> Span {
+  340|   357k|        Span {
+  341|   357k|            start: self.offset(),
+  342|   357k|            end: self.offset() + self.total_len(),
+  343|   357k|        }
+  344|   357k|    }
 _RNvXsd_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_10SyntaxNodeNtNtCs9nhK3FOW46N_4core3cmp9PartialEq2eqB9_:
-   10|   553k|#[derive(Clone, PartialEq, Eq, Hash)]
+   10|   558k|#[derive(Clone, PartialEq, Eq, Hash)]
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB2_10SyntaxNode10total_span:
    93|  1.15k|    pub fn total_span(&self) -> Span {
    94|  1.15k|        Span {
@@ -1528,17 +1528,17 @@ _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB2_10SyntaxNode10total_span:
    97|  1.15k|        }
    98|  1.15k|    }
 _RNvMs3_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_11SyntaxToken9total_len:
-  311|   705k|    pub fn total_len(&self) -> usize {
-  312|   705k|        self.raw().total_len()
-  313|   705k|    }
+  311|   714k|    pub fn total_len(&self) -> usize {
+  312|   714k|        self.raw().total_len()
+  313|   714k|    }
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB2_10SyntaxNode4root:
    36|  1.15k|    pub fn root(raw: RawNode) -> Self {
    37|  1.15k|        Self::new(raw, 0, None)
    38|  1.15k|    }
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB2_10SyntaxNode6offset:
-   62|   907k|    pub fn offset(&self) -> usize {
-   63|   907k|        self.0.offset
-   64|   907k|    }
+   62|   917k|    pub fn offset(&self) -> usize {
+   63|   917k|        self.0.offset
+   64|   917k|    }
 _RNvXs_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB4_10SyntaxNodeNtNtCs9nhK3FOW46N_4core3fmt7Display3fmt:
   262|  1.15k|    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
   263|  1.15k|        self.raw().fmt(f)
@@ -1554,287 +1554,287 @@ _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB2_10SyntaxNode9total_len:
    59|  1.15k|        self.raw().total_len()
    60|  1.15k|    }
 _RNvMs3_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_11SyntaxToken6parent:
-  327|   182k|    pub fn parent(&self) -> Option<&SyntaxNode> {
-  328|   182k|        self.0.parent.as_ref().map(|(parent, _)| parent)
-  329|   182k|    }
+  327|   184k|    pub fn parent(&self) -> Option<&SyntaxNode> {
+  328|   184k|        self.0.parent.as_ref().map(|(parent, _)| parent)
+  329|   184k|    }
 _RNvMs3_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_11SyntaxToken8text_len:
-  307|   352k|    pub fn text_len(&self) -> usize {
-  308|   352k|        self.text().len()
-  309|   352k|    }
+  307|   357k|    pub fn text_len(&self) -> usize {
+  308|   357k|        self.text().len()
+  309|   357k|    }
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB2_10SyntaxNode4kind:
    54|  1.15k|    pub fn kind(&self) -> TreeKind {
    55|  1.15k|        self.raw().kind()
    56|  1.15k|    }
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB2_10SyntaxNode6parent:
-   82|   316k|    pub fn parent(&self) -> Option<&Self> {
-   83|   316k|        self.0.parent.as_ref().map(|(parent, _)| parent)
-   84|   316k|    }
+   82|   318k|    pub fn parent(&self) -> Option<&Self> {
+   83|   318k|        self.0.parent.as_ref().map(|(parent, _)| parent)
+   84|   318k|    }
 _RNvXs1_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_14SyntaxNodeDataNtNtCs9nhK3FOW46N_4core3cmp9PartialEq2eq:
-  278|   551k|    fn eq(&self, other: &Self) -> bool {
-  279|   551k|        self.offset == other.offset && Arc::ptr_eq(&self.raw.0, &other.raw.0)
-  280|   551k|    }
+  278|   557k|    fn eq(&self, other: &Self) -> bool {
+  279|   557k|        self.offset == other.offset && Arc::ptr_eq(&self.raw.0, &other.raw.0)
+  280|   557k|    }
 _RNvMs3_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_11SyntaxToken14leading_trivia:
-  299|   352k|    pub fn leading_trivia(&self) -> &Trivia {
-  300|   352k|        self.raw().leading_trivia()
-  301|   352k|    }
+  299|   357k|    pub fn leading_trivia(&self) -> &Trivia {
+  300|   357k|        self.raw().leading_trivia()
+  301|   357k|    }
 _RNvMs3_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_11SyntaxToken4text:
-  323|   352k|    pub fn text(&self) -> &str {
-  324|   352k|        self.raw().text()
-  325|   352k|    }
+  323|   357k|    pub fn text(&self) -> &str {
+  324|   357k|        self.raw().text()
+  325|   357k|    }
 _RNvXsb_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_10SyntaxNodeNtNtCs9nhK3FOW46N_4core5clone5Clone5cloneB9_:
-   10|  1.46M|#[derive(Clone, PartialEq, Eq, Hash)]
+   10|  1.47M|#[derive(Clone, PartialEq, Eq, Hash)]
 _RNvMs3_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB5_11SyntaxToken12next_sibling:
-  359|   352k|    pub fn next_sibling(&self) -> Option<SyntaxNodeChild> {
-  360|   352k|        let (parent, idx) = self.0.parent.as_ref()?;
-  361|   352k|        parent.nth_child(idx + 1)
-  362|   352k|    }
+  359|   357k|    pub fn next_sibling(&self) -> Option<SyntaxNodeChild> {
+  360|   357k|        let (parent, idx) = self.0.parent.as_ref()?;
+  361|   357k|        parent.nth_child(idx + 1)
+  362|   357k|    }
 _RNCNCNvXsa_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB9_8PreorderNtNtNtNtCs9nhK3FOW46N_4core4iter6traits8iterator8Iterator4next00Bd_:
-  550|  53.5k|                        .or_else(|| Some(WalkEvent::Leave(child.clone()))),
+  550|  55.0k|                        .or_else(|| Some(WalkEvent::Leave(child.clone()))),
 _RNCNvXsa_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB7_8PreorderNtNtNtNtCs9nhK3FOW46N_4core4iter6traits8iterator8Iterator4next0Bb_:
-  545|  1.81M|            .and_then(|current_event| match current_event {
-  546|   906k|                WalkEvent::Enter(child) => match child {
-  547|   553k|                    NodeOrToken::Node(node) => node
-  548|   553k|                        .nth_child(0)
-  549|   553k|                        .map(WalkEvent::Enter)
-  550|   553k|                        .or_else(|| Some(WalkEvent::Leave(child.clone()))),
-  551|   352k|                    NodeOrToken::Token(token) => {
-  552|   352k|                        Some(WalkEvent::Leave(NodeOrToken::Token(token.clone())))
+  545|  1.83M|            .and_then(|current_event| match current_event {
+  546|   916k|                WalkEvent::Enter(child) => match child {
+  547|   558k|                    NodeOrToken::Node(node) => node
+  548|   558k|                        .nth_child(0)
+  549|   558k|                        .map(WalkEvent::Enter)
+  550|   558k|                        .or_else(|| Some(WalkEvent::Leave(child.clone()))),
+  551|   357k|                    NodeOrToken::Token(token) => {
+  552|   357k|                        Some(WalkEvent::Leave(NodeOrToken::Token(token.clone())))
   553|       |                    }
   554|       |                },
-  555|   906k|                WalkEvent::Leave(child) => {
-  556|   906k|                    if *child == self.start {
+  555|   916k|                WalkEvent::Leave(child) => {
+  556|   916k|                    if *child == self.start {
   557|  1.15k|                        None
   558|       |                    } else {
-  559|   904k|                        child.next_sibling().map(WalkEvent::Enter).or_else(|| {
+  559|   915k|                        child.next_sibling().map(WalkEvent::Enter).or_else(|| {
   560|       |                            child
   561|       |                                .parent()
   562|       |                                .map(|parent| WalkEvent::Leave(NodeOrToken::Node(parent.clone())))
-  563|   904k|                        })
+  563|   915k|                        })
   564|       |                    }
   565|       |                }
-  566|  1.81M|            });
+  566|  1.83M|            });
 _RNCNCNCNvXsa_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtBb_8PreorderNtNtNtNtCs9nhK3FOW46N_4core4iter6traits8iterator8Iterator4next0s_00Bf_:
-  562|   499k|                                .map(|parent| WalkEvent::Leave(NodeOrToken::Node(parent.clone())))
+  562|   503k|                                .map(|parent| WalkEvent::Leave(NodeOrToken::Node(parent.clone())))
 _RNCNvMNtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB4_10SyntaxNode6parent0B8_:
-   83|   316k|        self.0.parent.as_ref().map(|(parent, _)| parent)
+   83|   318k|        self.0.parent.as_ref().map(|(parent, _)| parent)
 _RNCNvMs3_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB7_11SyntaxToken6parent0Bb_:
-  328|   182k|        self.0.parent.as_ref().map(|(parent, _)| parent)
+  328|   184k|        self.0.parent.as_ref().map(|(parent, _)| parent)
 _RNCNCNvXsa_NtNtCslYuo9QnQJS9_5hedge6syntax3cstNtB9_8PreorderNtNtNtNtCs9nhK3FOW46N_4core4iter6traits8iterator8Iterator4next0s_0Bd_:
-  559|   499k|                        child.next_sibling().map(WalkEvent::Enter).or_else(|| {
-  560|   499k|                            child
-  561|   499k|                                .parent()
-  562|   499k|                                .map(|parent| WalkEvent::Leave(NodeOrToken::Node(parent.clone())))
-  563|   499k|                        })
+  559|   503k|                        child.next_sibling().map(WalkEvent::Enter).or_else(|| {
+  560|   503k|                            child
+  561|   503k|                                .parent()
+  562|   503k|                                .map(|parent| WalkEvent::Leave(NodeOrToken::Node(parent.clone())))
+  563|   503k|                        })
 
 _RNvXs3_NtNtCslYuo9QnQJS9_5hedge6syntax5kindsNtB5_9TokenKindNtNtCs9nhK3FOW46N_4core3cmp9PartialEq2eqB9_:
-    4|  5.12M|#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, ConstParamTy)]
+    4|  5.16M|#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, ConstParamTy)]
 _RNvXsc_NtNtCslYuo9QnQJS9_5hedge6syntax5kindsNtB5_8TreeKindNtNtCs9nhK3FOW46N_4core3cmp9PartialEq2eqB9_:
   245|  1.15k|#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, ConstParamTy)]
 
 _RNCNvMNtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB4_7RawNode8children0B8_:
-   73|   904k|        self.0.children.iter().map(|(child, _)| child)
+   73|   915k|        self.0.children.iter().map(|(child, _)| child)
 _RNCNvMNtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB4_7RawNode3news_0B8_:
-   44|   904k|            .map(|child| {
-   45|   904k|                let child_len = child.total_len();
-   46|   904k|                let child_with_offset = (child, offset);
-   47|   904k|
-   48|   904k|                offset += child_len;
-   49|   904k|                child_with_offset
-   50|   904k|            })
+   44|   915k|            .map(|child| {
+   45|   915k|                let child_len = child.total_len();
+   46|   915k|                let child_with_offset = (child, offset);
+   47|   915k|
+   48|   915k|                offset += child_len;
+   49|   915k|                child_with_offset
+   50|   915k|            })
 _RNCNvXs_NtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB6_7RawNodeNtNtCs9nhK3FOW46N_4core3fmt7Display3fmt0Ba_:
-  133|   904k|        self.children().try_for_each(|child| child.fmt(f))
+  133|   915k|        self.children().try_for_each(|child| child.fmt(f))
 _RNCNvMNtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB4_7RawNode3new0B8_:
-   40|   904k|        let len = children.iter().map(|child| child.total_len()).sum();
+   40|   915k|        let len = children.iter().map(|child| child.total_len()).sum();
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB2_7RawNode3new:
-   39|   553k|    pub fn new(kind: TreeKind, children: Vec<RawNodeChild>) -> Self {
-   40|   553k|        let len = children.iter().map(|child| child.total_len()).sum();
-   41|   553k|        let mut offset = 0;
-   42|   553k|        let children = children
-   43|   553k|            .into_iter()
-   44|   553k|            .map(|child| {
+   39|   558k|    pub fn new(kind: TreeKind, children: Vec<RawNodeChild>) -> Self {
+   40|   558k|        let len = children.iter().map(|child| child.total_len()).sum();
+   41|   558k|        let mut offset = 0;
+   42|   558k|        let children = children
+   43|   558k|            .into_iter()
+   44|   558k|            .map(|child| {
    45|       |                let child_len = child.total_len();
    46|       |                let child_with_offset = (child, offset);
    47|       |
    48|       |                offset += child_len;
    49|       |                child_with_offset
-   50|   553k|            })
-   51|   553k|            .collect();
-   52|   553k|
-   53|   553k|        Self(Arc::new(RawNodeData {
-   54|   553k|            kind,
-   55|   553k|            len,
-   56|   553k|            children,
-   57|   553k|        }))
-   58|   553k|    }
+   50|   558k|            })
+   51|   558k|            .collect();
+   52|   558k|
+   53|   558k|        Self(Arc::new(RawNodeData {
+   54|   558k|            kind,
+   55|   558k|            len,
+   56|   558k|            children,
+   57|   558k|        }))
+   58|   558k|    }
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB2_7RawNode8children:
-   72|   553k|    pub fn children(&self) -> impl Iterator<Item = &RawNodeChild> {
-   73|   553k|        self.0.children.iter().map(|(child, _)| child)
-   74|   553k|    }
+   72|   558k|    pub fn children(&self) -> impl Iterator<Item = &RawNodeChild> {
+   73|   558k|        self.0.children.iter().map(|(child, _)| child)
+   74|   558k|    }
 _RNvMs1_NtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB5_8RawToken4kind:
-  165|  3.09M|    pub fn kind(&self) -> TokenKind {
-  166|  3.09M|        self.0.kind
-  167|  3.09M|    }
+  165|  3.12M|    pub fn kind(&self) -> TokenKind {
+  166|  3.12M|        self.0.kind
+  167|  3.12M|    }
 _RNvMs1_NtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB5_8RawToken15trailing_trivia:
-  173|  2.47M|    pub fn trailing_trivia(&self) -> &Trivia {
-  174|  2.47M|        &self.0.trailing_trivia
-  175|  2.47M|    }
+  173|  2.50M|    pub fn trailing_trivia(&self) -> &Trivia {
+  174|  2.50M|        &self.0.trailing_trivia
+  175|  2.50M|    }
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB2_7RawNode9nth_child:
-   76|  1.45M|    pub fn nth_child(&self, idx: usize) -> Option<&(RawNodeChild, usize)> {
-   77|  1.45M|        self.0.children.get(idx)
-   78|  1.45M|    }
+   76|  1.47M|    pub fn nth_child(&self, idx: usize) -> Option<&(RawNodeChild, usize)> {
+   77|  1.47M|        self.0.children.get(idx)
+   78|  1.47M|    }
 _RNvXs2_NtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB5_8RawTokenNtNtCs9nhK3FOW46N_4core3fmt7Display3fmt:
-  205|   352k|    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-  206|   352k|        self.leading_trivia().fmt(f)?;
-  207|   352k|        self.text().fmt(f)?;
-  208|   352k|        self.trailing_trivia().fmt(f)
-  209|   352k|    }
+  205|   357k|    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+  206|   357k|        self.leading_trivia().fmt(f)?;
+  207|   357k|        self.text().fmt(f)?;
+  208|   357k|        self.trailing_trivia().fmt(f)
+  209|   357k|    }
 _RNvMs1_NtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB5_8RawToken3new:
-  147|   352k|    pub fn new(
-  148|   352k|        leading_trivia: Trivia,
-  149|   352k|        kind: TokenKind,
-  150|   352k|        text: String,
-  151|   352k|        trailing_trivia: Trivia,
-  152|   352k|    ) -> Self {
-  153|   352k|        Self(Arc::new(RawTokenData {
-  154|   352k|            leading_trivia,
-  155|   352k|            kind,
-  156|   352k|            text,
-  157|   352k|            trailing_trivia,
-  158|   352k|        }))
-  159|   352k|    }
+  147|   357k|    pub fn new(
+  148|   357k|        leading_trivia: Trivia,
+  149|   357k|        kind: TokenKind,
+  150|   357k|        text: String,
+  151|   357k|        trailing_trivia: Trivia,
+  152|   357k|    ) -> Self {
+  153|   357k|        Self(Arc::new(RawTokenData {
+  154|   357k|            leading_trivia,
+  155|   357k|            kind,
+  156|   357k|            text,
+  157|   357k|            trailing_trivia,
+  158|   357k|        }))
+  159|   357k|    }
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB2_7RawNode9total_len:
-   64|  1.10M|    pub fn total_len(&self) -> usize {
-   65|  1.10M|        self.0.len
-   66|  1.10M|    }
+   64|  1.11M|    pub fn total_len(&self) -> usize {
+   65|  1.11M|        self.0.len
+   66|  1.11M|    }
 _RNvMs1_NtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB5_8RawToken9total_len:
-  181|  1.76M|    pub fn total_len(&self) -> usize {
-  182|  1.76M|        self.leading_trivia().total_len() + self.text_len() + self.trailing_trivia().total_len()
-  183|  1.76M|    }
+  181|  1.78M|    pub fn total_len(&self) -> usize {
+  182|  1.78M|        self.leading_trivia().total_len() + self.text_len() + self.trailing_trivia().total_len()
+  183|  1.78M|    }
 _RNvMs3_NtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB5_14RawNodeBuilder9add_child:
-  225|   904k|    pub fn add_child(&mut self, child: RawNodeChild) {
-  226|   904k|        self.children.push(child);
-  227|   904k|    }
+  225|   915k|    pub fn add_child(&mut self, child: RawNodeChild) {
+  226|   915k|        self.children.push(child);
+  227|   915k|    }
 _RNvXs5_NtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB5_7RawNodeNtNtCs9nhK3FOW46N_4core5clone5Clone5cloneB9_:
-   10|   551k|#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+   10|   557k|#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 _RNvMs3_NtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB5_14RawNodeBuilder5build:
-  229|   553k|    pub fn build(self) -> RawNode {
-  230|   553k|        RawNode::new(self.kind, self.children)
-  231|   553k|    }
+  229|   558k|    pub fn build(self) -> RawNode {
+  230|   558k|        RawNode::new(self.kind, self.children)
+  231|   558k|    }
 _RNvMs1_NtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB5_8RawToken14leading_trivia:
-  161|  2.47M|    pub fn leading_trivia(&self) -> &Trivia {
-  162|  2.47M|        &self.0.leading_trivia
-  163|  2.47M|    }
+  161|  2.50M|    pub fn leading_trivia(&self) -> &Trivia {
+  162|  2.50M|        &self.0.leading_trivia
+  163|  2.50M|    }
 _RNvMs1_NtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB5_8RawToken4text:
-  169|  2.83M|    pub fn text(&self) -> &str {
-  170|  2.83M|        &self.0.text
-  171|  2.83M|    }
+  169|  2.87M|    pub fn text(&self) -> &str {
+  170|  2.87M|        &self.0.text
+  171|  2.87M|    }
 _RNvMs3_NtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB5_14RawNodeBuilder3new:
-  218|   553k|    pub fn new(kind: TreeKind) -> Self {
-  219|   553k|        Self {
-  220|   553k|            kind,
-  221|   553k|            children: Vec::new(),
-  222|   553k|        }
-  223|   553k|    }
+  218|   558k|    pub fn new(kind: TreeKind) -> Self {
+  219|   558k|        Self {
+  220|   558k|            kind,
+  221|   558k|            children: Vec::new(),
+  222|   558k|        }
+  223|   558k|    }
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB2_7RawNode4kind:
    60|  1.15k|    pub fn kind(&self) -> TreeKind {
    61|  1.15k|        self.0.kind
    62|  1.15k|    }
 _RNvXs_NtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB4_7RawNodeNtNtCs9nhK3FOW46N_4core3fmt7Display3fmt:
-  132|   553k|    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-  133|   553k|        self.children().try_for_each(|child| child.fmt(f))
-  134|   553k|    }
+  132|   558k|    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+  133|   558k|        self.children().try_for_each(|child| child.fmt(f))
+  134|   558k|    }
 _RNvMs1_NtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB5_8RawToken8text_len:
-  177|  2.13M|    pub fn text_len(&self) -> usize {
-  178|  2.13M|        self.text().len()
-  179|  2.13M|    }
+  177|  2.16M|    pub fn text_len(&self) -> usize {
+  178|  2.16M|        self.text().len()
+  179|  2.16M|    }
 _RNvXsi_NtNtCslYuo9QnQJS9_5hedge6syntax3rawNtB5_8RawTokenNtNtCs9nhK3FOW46N_4core5clone5Clone5cloneB9_:
-   25|   352k|#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+   25|   357k|#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 _RNvMs0_NtNtCslYuo9QnQJS9_5hedge6syntax3rawINtNtB7_13utility_types11NodeOrTokenNtB5_7RawNodeNtB5_8RawTokenE9total_len:
-  138|  1.80M|    pub fn total_len(&self) -> usize {
-  139|  1.80M|        match self {
-  140|  1.10M|            Self::Node(node) => node.total_len(),
-  141|   705k|            Self::Token(token) => token.total_len(),
+  138|  1.83M|    pub fn total_len(&self) -> usize {
+  139|  1.83M|        match self {
+  140|  1.11M|            Self::Node(node) => node.total_len(),
+  141|   714k|            Self::Token(token) => token.total_len(),
   142|       |        }
-  143|  1.80M|    }
+  143|  1.83M|    }
 
 _RNCNvMNtNtCslYuo9QnQJS9_5hedge6syntax6triviaNtB4_6Trivia9total_len0B8_:
-   35|   126k|        self.pieces.iter().map(|piece| piece.total_len()).sum()
+   35|   130k|        self.pieces.iter().map(|piece| piece.total_len()).sum()
 _RNCNvXs_NtNtCslYuo9QnQJS9_5hedge6syntax6triviaNtB6_6TriviaNtNtCs9nhK3FOW46N_4core3fmt7Display3fmt0Ba_:
-   98|  21.1k|        self.pieces.iter().try_for_each(|piece| piece.fmt(f))
+   98|  21.7k|        self.pieces.iter().try_for_each(|piece| piece.fmt(f))
 _RNvMs0_NtNtCslYuo9QnQJS9_5hedge6syntax6triviaNtB5_11TriviaPiece5count:
-  151|  59.8k|    fn count(&self) -> usize {
-  152|  59.8k|        match self {
-  153|  58.3k|            Self::Space(count) | Self::Tab(count) | Self::Newline(count) => *count,
-  154|  1.51k|            Self::Comment(_) => 1,
+  151|  63.1k|    fn count(&self) -> usize {
+  152|  63.1k|        match self {
+  153|  61.5k|            Self::Space(count) | Self::Tab(count) | Self::Newline(count) => *count,
+  154|  1.58k|            Self::Comment(_) => 1,
   155|       |        }
-  156|  59.8k|    }
+  156|  63.1k|    }
 _RNvXs1_NtNtCslYuo9QnQJS9_5hedge6syntax6triviaNtB5_11TriviaPieceNtNtCs9nhK3FOW46N_4core3fmt7Display3fmt:
-  160|  21.1k|    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-  161|  21.1k|        match self {
-  162|  5.38k|            Self::Space(count) => " ".repeat(*count).fmt(f),
-  163|  4.25k|            Self::Tab(count) => "\t".repeat(*count).fmt(f),
-  164|  10.0k|            Self::Newline(count) => "\n".repeat(*count).fmt(f),
-  165|  1.51k|            Self::Comment(comment) => comment.fmt(f),
+  160|  21.7k|    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+  161|  21.7k|        match self {
+  162|  5.63k|            Self::Space(count) => " ".repeat(*count).fmt(f),
+  163|  4.35k|            Self::Tab(count) => "\t".repeat(*count).fmt(f),
+  164|  10.1k|            Self::Newline(count) => "\n".repeat(*count).fmt(f),
+  165|  1.58k|            Self::Comment(comment) => comment.fmt(f),
   166|       |        }
-  167|  21.1k|    }
+  167|  21.7k|    }
 _RNvMs0_NtNtCslYuo9QnQJS9_5hedge6syntax6triviaNtB5_11TriviaPiece9total_len:
-  103|   126k|    pub fn total_len(&self) -> usize {
-  104|   126k|        match self {
-  105|   117k|            Self::Space(count) | Self::Tab(count) | Self::Newline(count) => *count,
-  106|  9.07k|            Self::Comment(comment) => comment.len(),
+  103|   130k|    pub fn total_len(&self) -> usize {
+  104|   130k|        match self {
+  105|   120k|            Self::Space(count) | Self::Tab(count) | Self::Newline(count) => *count,
+  106|  9.50k|            Self::Comment(comment) => comment.len(),
   107|       |        }
-  108|   126k|    }
+  108|   130k|    }
 _RNvXs4_NtNtCslYuo9QnQJS9_5hedge6syntax6triviaNtB5_6TriviaNtNtCs9nhK3FOW46N_4core7default7Default7defaultB9_:
-    3|   707k|#[derive(Debug, Clone, Default, PartialEq, Eq, Hash)]
+    3|   716k|#[derive(Debug, Clone, Default, PartialEq, Eq, Hash)]
 _RNvXs_NtNtCslYuo9QnQJS9_5hedge6syntax6triviaNtB4_6TriviaNtNtCs9nhK3FOW46N_4core3fmt7Display3fmt:
-   97|   705k|    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-   98|   705k|        self.pieces.iter().try_for_each(|piece| piece.fmt(f))
-   99|   705k|    }
+   97|   714k|    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+   98|   714k|        self.pieces.iter().try_for_each(|piece| piece.fmt(f))
+   99|   714k|    }
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax6triviaNtB2_6Trivia5empty:
-   26|   354k|    pub fn empty() -> Self {
-   27|   354k|        Self::default()
-   28|   354k|    }
+   26|   358k|    pub fn empty() -> Self {
+   27|   358k|        Self::default()
+   28|   358k|    }
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax6triviaNtB2_6Trivia9total_len:
-   34|  4.23M|    pub fn total_len(&self) -> usize {
-   35|  4.23M|        self.pieces.iter().map(|piece| piece.total_len()).sum()
-   36|  4.23M|    }
+   34|  4.28M|    pub fn total_len(&self) -> usize {
+   35|  4.28M|        self.pieces.iter().map(|piece| piece.total_len()).sum()
+   36|  4.28M|    }
 _RNvMNtNtCslYuo9QnQJS9_5hedge6syntax6triviaNtB2_6Trivia4push:
-   81|  59.8k|    pub(crate) fn push(&mut self, new_piece: TriviaPiece) {
-   82|  59.8k|        if new_piece.count() == 0 {
+   81|  63.1k|    pub(crate) fn push(&mut self, new_piece: TriviaPiece) {
+   82|  63.1k|        if new_piece.count() == 0 {
    83|      0|            return;
-   84|  59.8k|        }
+   84|  63.1k|        }
    85|       |
-   86|  59.8k|        if let Some(last) = self.pieces.last_mut()
-   87|  42.3k|            && let Some(combined) = last.combine(&new_piece)
-   88|  38.7k|        {
-   89|  38.7k|            *last = combined;
-   90|  38.7k|        } else {
-   91|  21.1k|            self.pieces.push(new_piece);
-   92|  21.1k|        }
-   93|  59.8k|    }
+   86|  63.1k|        if let Some(last) = self.pieces.last_mut()
+   87|  45.1k|            && let Some(combined) = last.combine(&new_piece)
+   88|  41.3k|        {
+   89|  41.3k|            *last = combined;
+   90|  41.3k|        } else {
+   91|  21.7k|            self.pieces.push(new_piece);
+   92|  21.7k|        }
+   93|  63.1k|    }
 _RNvMs0_NtNtCslYuo9QnQJS9_5hedge6syntax6triviaNtB5_11TriviaPiece7combine:
-  142|  42.3k|    fn combine(&self, new_piece: &Self) -> Option<Self> {
-  143|  42.3k|        match (self, new_piece) {
-  144|  13.9k|            (Self::Space(c1), Self::Space(c2)) => Some(Self::Space(c1 + c2)),
-  145|  4.74k|            (Self::Tab(c1), Self::Tab(c2)) => Some(Self::Tab(c1 + c2)),
-  146|  20.0k|            (Self::Newline(c1), Self::Newline(c2)) => Some(Self::Newline(c1 + c2)),
-  147|  3.68k|            _ => None,
+  142|  45.1k|    fn combine(&self, new_piece: &Self) -> Option<Self> {
+  143|  45.1k|        match (self, new_piece) {
+  144|  16.7k|            (Self::Space(c1), Self::Space(c2)) => Some(Self::Space(c1 + c2)),
+  145|  4.78k|            (Self::Tab(c1), Self::Tab(c2)) => Some(Self::Tab(c1 + c2)),
+  146|  19.8k|            (Self::Newline(c1), Self::Newline(c2)) => Some(Self::Newline(c1 + c2)),
+  147|  3.79k|            _ => None,
   148|       |        }
-  149|  42.3k|    }
+  149|  45.1k|    }
 
 _RNvXsh_NtNtCslYuo9QnQJS9_5hedge6syntax13utility_typesNtB5_4SpanNtNtCs9nhK3FOW46N_4core3cmp9PartialEq2eqCs9XZRW3uwhtg_6parser:
-   67|   354k|#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+   67|   358k|#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 _RNvXs_NtNtCslYuo9QnQJS9_5hedge6syntax13utility_typesINtB4_11NodeOrTokenNtNtB6_3raw7RawNodeNtB19_8RawTokenENtNtCs9nhK3FOW46N_4core3fmt7Display3fmtB8_:
-   58|   904k|    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-   59|   904k|        match self {
-   60|   551k|            Self::Node(it) => it.fmt(f),
-   61|   352k|            Self::Token(it) => it.fmt(f),
+   58|   915k|    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+   59|   915k|        match self {
+   60|   557k|            Self::Node(it) => it.fmt(f),
+   61|   357k|            Self::Token(it) => it.fmt(f),
    62|       |        }
-   63|   904k|    }
+   63|   915k|    }
 _RNvXs7_NtNtCslYuo9QnQJS9_5hedge6syntax13utility_typesINtB5_11NodeOrTokenNtNtB7_3cst10SyntaxNodeNtB1a_11SyntaxTokenENtNtCs9nhK3FOW46N_4core3cmp9PartialEq2eqB9_:
-    6|   906k|#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    6|   916k|#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 _RNvXs4_NtNtCslYuo9QnQJS9_5hedge6syntax13utility_typesINtB5_11NodeOrTokenNtNtB7_3raw7RawNodeNtB1a_8RawTokenENtNtCs9nhK3FOW46N_4core5clone5Clone5cloneB9_:
-    6|   904k|#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    6|   915k|#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 _RNvXs4_NtNtCslYuo9QnQJS9_5hedge6syntax13utility_typesINtB5_11NodeOrTokenNtNtB7_3cst10SyntaxNodeNtB1a_11SyntaxTokenENtNtCs9nhK3FOW46N_4core5clone5Clone5cloneB9_:
-    6|  54.7k|#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    6|  56.1k|#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 
